@@ -14,6 +14,7 @@ final class PPP_BPE_Plugin {
 	private ?PPP_BPE_Settings $settings   = null;
 	private ?PPP_BPE_Admin    $admin      = null;
 	private ?PPP_BPE_Rest     $rest       = null;
+	private ?PPP_BPE_Cart     $cart       = null;
 
 	public static function instance(): self {
 		if ( null === self::$instance ) {
@@ -44,6 +45,9 @@ final class PPP_BPE_Plugin {
 		$this->rest = new PPP_BPE_Rest();
 		$this->rest->register_hooks();
 
+		$this->cart = new PPP_BPE_Cart();
+		$this->cart->register_hooks();
+
 		add_action( 'init', array( $this, 'register_shortcode' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_public_assets' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
@@ -59,6 +63,7 @@ final class PPP_BPE_Plugin {
 		require_once $includes . 'class-ppp-bpe-offer-signer.php';
 		require_once $includes . 'class-ppp-bpe-api-client.php';
 		require_once $includes . 'class-ppp-bpe-rest.php';
+		require_once $includes . 'class-ppp-bpe-cart.php';
 	}
 
 	public static function activate(): void {
@@ -134,6 +139,7 @@ final class PPP_BPE_Plugin {
 
 		$calc_data = wp_json_encode( array(
 			'restUrl'        => rest_url( PPP_BPE_Rest::NAMESPACE . '/calculate' ),
+			'addToCartUrl'   => rest_url( PPP_BPE_Rest::NAMESPACE . '/add-to-cart' ),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
 			'currency'       => $default_currency,
 			'mode'           => $options['mode'] ?? 'local',
@@ -146,7 +152,10 @@ final class PPP_BPE_Plugin {
 				'perCopy'        => __( 'per copy', 'printpricepro-bpe' ),
 				'total'          => __( 'Total', 'printpricepro-bpe' ),
 				'addToCart'      => __( 'Add to Cart', 'printpricepro-bpe' ),
-				'comingSoon'     => __( 'Cart integration coming in a future update.', 'printpricepro-bpe' ),
+				'addingToCart'   => __( 'Adding…', 'printpricepro-bpe' ),
+				'addedToCart'    => __( 'Added to Cart!', 'printpricepro-bpe' ),
+				'viewCart'       => __( 'View Cart', 'printpricepro-bpe' ),
+				'cartError'      => __( 'Could not add to cart. Please try again.', 'printpricepro-bpe' ),
 				'fallbackNotice' => __( 'Estimated price (service temporarily unavailable)', 'printpricepro-bpe' ),
 			),
 		) );

@@ -243,17 +243,45 @@
 	cursor: pointer;
 }
 
+.ppp-bpe-calculator__add-to-cart:hover {
+	background: #15803d;
+}
+
 .ppp-bpe-calculator__add-to-cart[disabled] {
 	opacity: 0.5;
 	cursor: not-allowed;
 	pointer-events: none;
 }
 
-.ppp-bpe-calculator__cart-note {
+.ppp-bpe-calculator__add-to-cart--success {
+	background: #166534;
+}
+
+/* Cart message */
+.ppp-bpe-calculator__cart-message {
 	text-align: center;
-	color: var(--ppp-text-muted);
-	font-size: 0.85em;
-	margin: 8px 0 0;
+	font-size: 0.9em;
+	margin: 10px 0 0;
+	padding: 8px 12px;
+	border-radius: var(--ppp-radius);
+}
+
+.ppp-bpe-calculator__cart-message--success {
+	color: #166534;
+	background: #f0fdf4;
+	border: 1px solid #86efac;
+}
+
+.ppp-bpe-calculator__cart-message--success a {
+	color: #166534;
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+.ppp-bpe-calculator__cart-message--error {
+	color: var(--ppp-error);
+	background: var(--ppp-error-bg);
+	border: 1px solid #fca5a5;
 }
 
 /* Compact mode */

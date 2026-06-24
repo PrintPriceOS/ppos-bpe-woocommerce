@@ -14,6 +14,8 @@
 	var breakdownEl = document.getElementById( 'ppp-bpe-calc-breakdown' );
 	var totalEl    = document.getElementById( 'ppp-bpe-calc-total' );
 	var submitBtn  = document.getElementById( 'ppp-bpe-calc-submit' );
+	var cartBtn    = document.getElementById( 'ppp-bpe-add-to-cart' );
+	var cartMsgEl  = document.getElementById( 'ppp-bpe-cart-message' );
 
 	if ( ! form ) {
 		return;
@@ -150,6 +152,15 @@
 		errorEl.textContent = '';
 	}
 
+	function resetCartButton() {
+		cartBtn.disabled = false;
+		cartBtn.textContent = config.i18n.addToCart;
+		cartBtn.classList.remove( 'ppp-bpe-calculator__add-to-cart--success' );
+		cartMsgEl.style.display = 'none';
+		cartMsgEl.textContent = '';
+		cartMsgEl.className = 'ppp-bpe-calculator__cart-message';
+	}
+
 	function renderResults( data ) {
 		/* Summary */
 		var specs = data.specs;
@@ -215,6 +226,9 @@
 			sourceEl.style.display = 'none';
 		}
 
+		/* Enable add-to-cart */
+		resetCartButton();
+
 		resultsEl.style.display = '';
 	}
 
@@ -268,11 +282,70 @@
 		});
 	}
 
+	/* ── Add to Cart via REST ── */
+
+	function doAddToCart() {
+		if ( ! lastOffer || ! lastOffer.signature ) {
+			return;
+		}
+
+		cartBtn.disabled = true;
+		cartBtn.textContent = config.i18n.addingToCart;
+		cartMsgEl.style.display = 'none';
+
+		fetch( config.addToCartUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-WP-Nonce':   config.nonce
+			},
+			body: JSON.stringify({
+				offer:     lastOffer.data,
+				signature: lastOffer.signature
+			})
+		})
+		.then( function ( response ) {
+			return response.json().then( function ( body ) {
+				return { ok: response.ok, body: body };
+			});
+		})
+		.then( function ( result ) {
+			if ( ! result.ok ) {
+				cartBtn.disabled = false;
+				cartBtn.textContent = config.i18n.addToCart;
+				cartMsgEl.className = 'ppp-bpe-calculator__cart-message ppp-bpe-calculator__cart-message--error';
+				cartMsgEl.textContent = result.body.error || config.i18n.cartError;
+				cartMsgEl.style.display = '';
+				return;
+			}
+
+			cartBtn.textContent = config.i18n.addedToCart;
+			cartBtn.classList.add( 'ppp-bpe-calculator__add-to-cart--success' );
+
+			cartMsgEl.className = 'ppp-bpe-calculator__cart-message ppp-bpe-calculator__cart-message--success';
+			cartMsgEl.innerHTML = '<a href="' + result.body.cart_url + '">' + config.i18n.viewCart + '</a>';
+			cartMsgEl.style.display = '';
+
+			lastOffer = null;
+		})
+		.catch( function () {
+			cartBtn.disabled = false;
+			cartBtn.textContent = config.i18n.addToCart;
+			cartMsgEl.className = 'ppp-bpe-calculator__cart-message ppp-bpe-calculator__cart-message--error';
+			cartMsgEl.textContent = config.i18n.cartError;
+			cartMsgEl.style.display = '';
+		});
+	}
+
 	/* ── Event listeners ── */
 
 	form.addEventListener( 'submit', function ( e ) {
 		e.preventDefault();
 		doCalculate();
+	});
+
+	cartBtn.addEventListener( 'click', function () {
+		doAddToCart();
 	});
 
 	/* Auto-recalculate on field change after first calculation */

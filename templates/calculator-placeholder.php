@@ -127,8 +127,6 @@ if ( 'compact' === ( $atts['mode'] ?? 'full' ) ) {
 		<button type="button" class="ppp-bpe-calculator__add-to-cart" id="ppp-bpe-add-to-cart" disabled>
 			<?php esc_html_e( 'Add to Cart', 'printpricepro-bpe' ); ?>
 		</button>
-		<p class="ppp-bpe-calculator__cart-note">
-			<?php esc_html_e( 'Cart integration coming in a future update.', 'printpricepro-bpe' ); ?>
-		</p>
+		<div class="ppp-bpe-calculator__cart-message" id="ppp-bpe-cart-message" style="display:none;"></div>
 	</div>
 </div>
