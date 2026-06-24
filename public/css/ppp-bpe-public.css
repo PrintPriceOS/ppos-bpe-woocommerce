@@ -1,17 +1,270 @@
+/* PrintPricePro BPE — Calculator Styles */
+
 #printpricepro-bpe-calculator {
-	box-sizing: border-box;
+	--ppp-accent: #2563eb;
+	--ppp-accent-hover: #1d4ed8;
+	--ppp-border: #d1d5db;
+	--ppp-bg-muted: #f8fafc;
+	--ppp-text: #1f2937;
+	--ppp-text-muted: #6b7280;
+	--ppp-error: #dc2626;
+	--ppp-error-bg: #fef2f2;
+	--ppp-radius: 6px;
+
 	max-width: 800px;
 	margin: 0 auto;
-	padding: 20px;
+	padding: 24px 16px;
 	font-family: inherit;
+	color: var(--ppp-text);
+	line-height: 1.5;
 }
 
-#printpricepro-bpe-calculator .ppp-bpe-placeholder {
+#printpricepro-bpe-calculator *,
+#printpricepro-bpe-calculator *::before,
+#printpricepro-bpe-calculator *::after {
+	box-sizing: border-box;
+}
+
+/* Form layout */
+.ppp-bpe-calculator__form {
+	display: grid;
+	gap: 24px;
+}
+
+@media (min-width: 600px) {
+	.ppp-bpe-calculator__form {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.ppp-bpe-calculator__section--full {
+		grid-column: 1 / -1;
+	}
+}
+
+/* Sections */
+.ppp-bpe-calculator__section {
+	padding: 0;
+}
+
+.ppp-bpe-calculator__heading {
+	font-size: 1.1em;
+	font-weight: 600;
+	margin: 0 0 16px 0;
+	padding-bottom: 8px;
+	border-bottom: 1px solid var(--ppp-border);
+}
+
+/* Fields */
+.ppp-bpe-calculator__field {
+	margin-bottom: 16px;
+}
+
+.ppp-bpe-calculator__field label,
+.ppp-bpe-calculator__label {
+	display: block;
+	font-weight: 600;
+	font-size: 0.9em;
+	margin-bottom: 4px;
+	color: var(--ppp-text);
+}
+
+.ppp-bpe-calculator__field select,
+.ppp-bpe-calculator__field input[type="number"] {
+	width: 100%;
+	padding: 8px 12px;
+	border: 1px solid var(--ppp-border);
+	border-radius: var(--ppp-radius);
+	font-size: 1em;
+	font-family: inherit;
+	color: var(--ppp-text);
+	background: #fff;
+	transition: border-color 0.15s;
+}
+
+.ppp-bpe-calculator__field select:focus,
+.ppp-bpe-calculator__field input[type="number"]:focus {
+	outline: none;
+	border-color: var(--ppp-accent);
+	box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.ppp-bpe-calculator__field select.ppp-bpe-field-error,
+.ppp-bpe-calculator__field input.ppp-bpe-field-error {
+	border-color: var(--ppp-error);
+}
+
+/* Radio groups */
+.ppp-bpe-calculator__radio-group {
+	display: flex;
+	gap: 16px;
+	margin-top: 4px;
+}
+
+.ppp-bpe-calculator__radio-group label {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-weight: 400;
+	cursor: pointer;
+}
+
+.ppp-bpe-calculator__radio-group input[type="radio"] {
+	margin: 0;
+}
+
+/* Submit button */
+.ppp-bpe-calculator__submit {
+	display: block;
+	width: 100%;
+	padding: 12px 24px;
+	background: var(--ppp-accent);
+	color: #fff;
+	border: none;
+	border-radius: var(--ppp-radius);
+	font-size: 1em;
+	font-weight: 600;
+	font-family: inherit;
+	cursor: pointer;
+	transition: background-color 0.15s;
+}
+
+.ppp-bpe-calculator__submit:hover {
+	background: var(--ppp-accent-hover);
+}
+
+.ppp-bpe-calculator__submit:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+@media (min-width: 600px) {
+	.ppp-bpe-calculator__submit {
+		width: auto;
+		min-width: 200px;
+	}
+}
+
+/* Loading */
+.ppp-bpe-calculator__loading {
 	text-align: center;
-	padding: 40px 20px;
-	background: #f8f9fa;
-	border: 1px solid #e2e8f0;
+	padding: 20px;
+	color: var(--ppp-text-muted);
+	font-style: italic;
+	margin-top: 16px;
+}
+
+/* Error */
+.ppp-bpe-calculator__error {
+	color: var(--ppp-error);
+	background: var(--ppp-error-bg);
+	padding: 12px 16px;
+	border-radius: var(--ppp-radius);
+	margin-top: 16px;
+	font-size: 0.95em;
+}
+
+/* Inline field warning */
+.ppp-bpe-field-warning {
+	color: var(--ppp-error);
+	font-size: 0.85em;
+	margin-top: 4px;
+}
+
+/* Results panel */
+.ppp-bpe-calculator__results {
+	background: var(--ppp-bg-muted);
+	border: 1px solid var(--ppp-border);
 	border-radius: 8px;
-	color: #64748b;
-	font-size: 14px;
+	padding: 24px;
+	margin-top: 24px;
+}
+
+/* Summary */
+.ppp-bpe-calculator__summary {
+	color: var(--ppp-text-muted);
+	font-size: 0.95em;
+	margin-bottom: 16px;
+	line-height: 1.6;
+}
+
+/* Price breakdown table */
+.ppp-bpe-calculator__breakdown {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 16px;
+}
+
+.ppp-bpe-calculator__breakdown td {
+	padding: 6px 0;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.ppp-bpe-calculator__breakdown td:last-child {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+.ppp-bpe-calculator__breakdown .ppp-bpe-row-total td {
+	font-weight: 700;
+	font-size: 1.05em;
+	border-top: 2px solid #374151;
+	border-bottom: none;
+	padding-top: 10px;
+}
+
+/* Total */
+.ppp-bpe-calculator__total {
+	font-size: 1.4em;
+	font-weight: 700;
+	text-align: right;
+	margin-bottom: 16px;
+	color: var(--ppp-text);
+}
+
+.ppp-bpe-calculator__total .ppp-bpe-unit-price {
+	display: block;
+	font-size: 0.6em;
+	font-weight: 400;
+	color: var(--ppp-text-muted);
+}
+
+/* Add to Cart button */
+.ppp-bpe-calculator__add-to-cart {
+	display: block;
+	width: 100%;
+	padding: 12px 24px;
+	background: #16a34a;
+	color: #fff;
+	border: none;
+	border-radius: var(--ppp-radius);
+	font-size: 1em;
+	font-weight: 600;
+	font-family: inherit;
+	cursor: pointer;
+}
+
+.ppp-bpe-calculator__add-to-cart[disabled] {
+	opacity: 0.5;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.ppp-bpe-calculator__cart-note {
+	text-align: center;
+	color: var(--ppp-text-muted);
+	font-size: 0.85em;
+	margin: 8px 0 0;
+}
+
+/* Compact mode */
+.ppp-bpe-calculator--compact {
+	max-width: 480px;
+}
+
+.ppp-bpe-calculator--compact .ppp-bpe-calculator__heading {
+	display: none;
+}
+
+.ppp-bpe-calculator--compact .ppp-bpe-calculator__form {
+	grid-template-columns: 1fr;
 }

@@ -25,6 +25,79 @@ class PPP_BPE_Rest {
 				'permission_callback' => '__return_true',
 			)
 		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/calculate',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'calculate' ),
+				'permission_callback' => '__return_true',
+				'args'                => $this->get_calculate_args(),
+			)
+		);
+	}
+
+	public function calculate( WP_REST_Request $request ): WP_REST_Response {
+		$calculator = new PPP_BPE_Calculator();
+		$validated  = $calculator->validate_specs( $request->get_params() );
+
+		if ( is_wp_error( $validated ) ) {
+			return new WP_REST_Response(
+				array( 'errors' => $validated->get_error_messages() ),
+				400
+			);
+		}
+
+		return new WP_REST_Response( $calculator->calculate( $validated ), 200 );
+	}
+
+	private function get_calculate_args(): array {
+		return array(
+			'book_size'      => array(
+				'type'              => 'string',
+				'required'          => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'pages'          => array(
+				'type'     => 'integer',
+				'required' => true,
+				'minimum'  => 8,
+				'maximum'  => 1000,
+			),
+			'copies'         => array(
+				'type'     => 'integer',
+				'required' => true,
+				'minimum'  => 1,
+				'maximum'  => 10000,
+			),
+			'interior_color' => array(
+				'type'     => 'string',
+				'required' => true,
+				'enum'     => array( 'bw', 'color' ),
+			),
+			'cover_color'    => array(
+				'type'     => 'string',
+				'required' => true,
+				'enum'     => array( 'bw', 'color' ),
+			),
+			'binding'        => array(
+				'type'              => 'string',
+				'required'          => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'paper'          => array(
+				'type'              => 'string',
+				'required'          => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'country'        => array(
+				'type'              => 'string',
+				'required'          => false,
+				'default'           => 'ES',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+		);
 	}
 
 	public function health_check( WP_REST_Request $request ): WP_REST_Response {

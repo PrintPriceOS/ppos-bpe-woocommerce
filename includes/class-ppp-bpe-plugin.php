@@ -55,6 +55,7 @@ final class PPP_BPE_Plugin {
 		require_once $includes . 'class-ppp-bpe-settings.php';
 		require_once $includes . 'class-ppp-bpe-admin.php';
 		require_once $includes . 'class-ppp-bpe-woocommerce.php';
+		require_once $includes . 'class-ppp-bpe-calculator.php';
 		require_once $includes . 'class-ppp-bpe-rest.php';
 	}
 
@@ -104,8 +105,45 @@ final class PPP_BPE_Plugin {
 	}
 
 	public function render_calculator( $atts ): string {
+		$atts = shortcode_atts(
+			array(
+				'product_type'   => 'paperback',
+				'mode'           => 'full',
+				'default_copies' => 1,
+				'country'        => '',
+			),
+			$atts,
+			'printpricepro_bpe_calculator'
+		);
+
 		wp_enqueue_style( 'ppp-bpe-public' );
 		wp_enqueue_script( 'ppp-bpe-public' );
+
+		$calculator   = new PPP_BPE_Calculator();
+		$form_options = $calculator->get_form_options();
+		$options      = get_option( PPP_BPE_Settings::OPTION_NAME, array() );
+
+		$default_country  = ! empty( $atts['country'] )
+			? strtoupper( sanitize_text_field( $atts['country'] ) )
+			: ( $options['default_country'] ?? 'ES' );
+		$default_currency = $options['default_currency'] ?? 'EUR';
+
+		wp_localize_script( 'ppp-bpe-public', 'pppBpeCalc', array(
+			'restUrl'        => rest_url( PPP_BPE_Rest::NAMESPACE . '/calculate' ),
+			'nonce'          => wp_create_nonce( 'wp_rest' ),
+			'currency'       => $default_currency,
+			'defaultCountry' => $default_country,
+			'defaultCopies'  => absint( $atts['default_copies'] ),
+			'i18n'           => array(
+				'calculating'  => __( 'Calculating…', 'printpricepro-bpe' ),
+				'calculate'    => __( 'Calculate Price', 'printpricepro-bpe' ),
+				'errorGeneric' => __( 'An error occurred. Please try again.', 'printpricepro-bpe' ),
+				'perCopy'      => __( 'per copy', 'printpricepro-bpe' ),
+				'total'        => __( 'Total', 'printpricepro-bpe' ),
+				'addToCart'    => __( 'Add to Cart', 'printpricepro-bpe' ),
+				'comingSoon'   => __( 'Cart integration coming in a future update.', 'printpricepro-bpe' ),
+			),
+		) );
 
 		ob_start();
 		include PPP_BPE_PLUGIN_DIR . 'templates/calculator-placeholder.php';
