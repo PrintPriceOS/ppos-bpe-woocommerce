@@ -39,3 +39,8 @@ ehthumbs.db
 # Archives / Releases
 *.zip
 *.tar.gz
+
+# Project-local files (not for distribution)
+CLAUDE.md
+docker-compose.yml
+PrintPricePro BPE WooCommerce Plugin.md
