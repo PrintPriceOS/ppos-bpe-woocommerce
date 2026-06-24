@@ -1,0 +1,24 @@
+.ppp-bpe-admin-wrap {
+	max-width: 800px;
+}
+
+.ppp-bpe-admin-wrap h1 {
+	margin-bottom: 20px;
+}
+
+.ppp-bpe-placeholder-page {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	padding: 30px;
+	margin-top: 20px;
+	border-radius: 4px;
+}
+
+.ppp-bpe-placeholder-page h2 {
+	margin-top: 0;
+}
+
+.ppp-bpe-placeholder-page p {
+	color: #646970;
+	font-size: 14px;
+}

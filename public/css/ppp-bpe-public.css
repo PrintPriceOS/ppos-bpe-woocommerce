@@ -1,0 +1,17 @@
+#printpricepro-bpe-calculator {
+	box-sizing: border-box;
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+	font-family: inherit;
+}
+
+#printpricepro-bpe-calculator .ppp-bpe-placeholder {
+	text-align: center;
+	padding: 40px 20px;
+	background: #f8f9fa;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	color: #64748b;
+	font-size: 14px;
+}

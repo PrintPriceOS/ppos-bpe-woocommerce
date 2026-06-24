@@ -1,0 +1,41 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build artifacts
+/build/
+/dist/
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+# Composer
+composer.lock
+
+# npm / Node
+package-lock.json
+npm-debug.log*
+yarn-error.log
+
+# WordPress debug
+debug.log
+error_log
+
+# OS files
+Desktop.ini
+ehthumbs.db
+
+# Archives / Releases
+*.zip
+*.tar.gz
