@@ -268,3 +268,19 @@
 .ppp-bpe-calculator--compact .ppp-bpe-calculator__form {
 	grid-template-columns: 1fr;
 }
+
+/* ── Fallback notice ── */
+
+.ppp-bpe-source-badge {
+	margin-top: 8px;
+	font-size: 0.8em;
+	text-align: center;
+}
+
+.ppp-bpe-source-fallback {
+	color: #92400e;
+	background: #fffbeb;
+	border: 1px solid #fbbf24;
+	border-radius: var(--ppp-radius);
+	padding: 6px 12px;
+}

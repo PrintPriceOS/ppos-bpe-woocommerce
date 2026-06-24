@@ -56,6 +56,8 @@ final class PPP_BPE_Plugin {
 		require_once $includes . 'class-ppp-bpe-admin.php';
 		require_once $includes . 'class-ppp-bpe-woocommerce.php';
 		require_once $includes . 'class-ppp-bpe-calculator.php';
+		require_once $includes . 'class-ppp-bpe-offer-signer.php';
+		require_once $includes . 'class-ppp-bpe-api-client.php';
 		require_once $includes . 'class-ppp-bpe-rest.php';
 	}
 
@@ -134,16 +136,18 @@ final class PPP_BPE_Plugin {
 			'restUrl'        => rest_url( PPP_BPE_Rest::NAMESPACE . '/calculate' ),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
 			'currency'       => $default_currency,
+			'mode'           => $options['mode'] ?? 'local',
 			'defaultCountry' => $default_country,
 			'defaultCopies'  => absint( $atts['default_copies'] ),
 			'i18n'           => array(
-				'calculating'  => __( 'Calculating…', 'printpricepro-bpe' ),
-				'calculate'    => __( 'Calculate Price', 'printpricepro-bpe' ),
-				'errorGeneric' => __( 'An error occurred. Please try again.', 'printpricepro-bpe' ),
-				'perCopy'      => __( 'per copy', 'printpricepro-bpe' ),
-				'total'        => __( 'Total', 'printpricepro-bpe' ),
-				'addToCart'    => __( 'Add to Cart', 'printpricepro-bpe' ),
-				'comingSoon'   => __( 'Cart integration coming in a future update.', 'printpricepro-bpe' ),
+				'calculating'    => __( 'Calculating…', 'printpricepro-bpe' ),
+				'calculate'      => __( 'Calculate Price', 'printpricepro-bpe' ),
+				'errorGeneric'   => __( 'An error occurred. Please try again.', 'printpricepro-bpe' ),
+				'perCopy'        => __( 'per copy', 'printpricepro-bpe' ),
+				'total'          => __( 'Total', 'printpricepro-bpe' ),
+				'addToCart'      => __( 'Add to Cart', 'printpricepro-bpe' ),
+				'comingSoon'     => __( 'Cart integration coming in a future update.', 'printpricepro-bpe' ),
+				'fallbackNotice' => __( 'Estimated price (service temporarily unavailable)', 'printpricepro-bpe' ),
 			),
 		) );
 

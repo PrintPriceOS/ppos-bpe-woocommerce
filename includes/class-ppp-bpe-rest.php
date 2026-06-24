@@ -39,6 +39,17 @@ class PPP_BPE_Rest {
 	}
 
 	public function calculate( WP_REST_Request $request ): WP_REST_Response {
+		$options = get_option( PPP_BPE_Settings::OPTION_NAME, array() );
+		$mode    = $options['mode'] ?? 'local';
+
+		if ( 'api' === $mode || 'federated_node' === $mode ) {
+			return $this->calculate_via_api( $request, $options );
+		}
+
+		return $this->calculate_local( $request );
+	}
+
+	private function calculate_local( WP_REST_Request $request ): WP_REST_Response {
 		$calculator = new PPP_BPE_Calculator();
 		$validated  = $calculator->validate_specs( $request->get_params() );
 
@@ -49,7 +60,56 @@ class PPP_BPE_Rest {
 			);
 		}
 
-		return new WP_REST_Response( $calculator->calculate( $validated ), 200 );
+		$result = $calculator->calculate( $validated );
+
+		$result['offer_signature'] = PPP_BPE_Offer_Signer::sign( $result );
+		$result['source']          = 'local';
+
+		return new WP_REST_Response( $result, 200 );
+	}
+
+	private function calculate_via_api( WP_REST_Request $request, array $options ): WP_REST_Response {
+		$api_url     = $options['bpe_api_url'] ?? '';
+		$license_key = $options['license_key'] ?? '';
+		$tenant_id   = $options['tenant_id'] ?? '';
+
+		if ( '' === $api_url ) {
+			$this->log( 'API mode active but no BPE API URL configured. Falling back to local.' );
+			return $this->calculate_local( $request );
+		}
+
+		$calculator = new PPP_BPE_Calculator();
+		$validated  = $calculator->validate_specs( $request->get_params() );
+
+		if ( is_wp_error( $validated ) ) {
+			return new WP_REST_Response(
+				array( 'errors' => $validated->get_error_messages() ),
+				400
+			);
+		}
+
+		$client = new PPP_BPE_Api_Client( $api_url, $license_key, $tenant_id );
+		$result = $client->calculate( $validated );
+
+		if ( is_wp_error( $result ) ) {
+			$error_data = $result->get_error_data();
+
+			if ( ! empty( $error_data['errors'] ) && is_array( $error_data['errors'] ) ) {
+				return new WP_REST_Response(
+					array( 'errors' => array_map( 'sanitize_text_field', $error_data['errors'] ) ),
+					400
+				);
+			}
+
+			$this->log( 'API call failed: ' . $result->get_error_message() . '. Falling back to local calculator.' );
+			$local_result = $this->calculate_local( $request );
+			$data         = $local_result->get_data();
+			$data['source'] = 'local_fallback';
+			$local_result->set_data( $data );
+			return $local_result;
+		}
+
+		return new WP_REST_Response( $result, 200 );
 	}
 
 	private function get_calculate_args(): array {
@@ -117,6 +177,23 @@ class PPP_BPE_Rest {
 			'timestamp'          => current_time( 'c' ),
 		);
 
+		if ( 'api' === $mode || 'federated_node' === $mode ) {
+			$api_url = $options['bpe_api_url'] ?? '';
+			$data['api_configured'] = '' !== $api_url;
+		}
+
 		return new WP_REST_Response( $data, 200 );
+	}
+
+	private function log( string $message ): void {
+		$options = get_option( PPP_BPE_Settings::OPTION_NAME, array() );
+
+		if ( empty( $options['debug_mode'] ) ) {
+			return;
+		}
+
+		if ( function_exists( 'wc_get_logger' ) ) {
+			wc_get_logger()->debug( $message, array( 'source' => 'printpricepro-bpe' ) );
+		}
 	}
 }

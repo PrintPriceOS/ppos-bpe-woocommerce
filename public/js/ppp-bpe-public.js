@@ -21,6 +21,7 @@
 
 	var hasCalculated = false;
 	var debounceTimer = null;
+	var lastOffer     = null;
 
 	/* ── Binding page-count rules (injected from PHP via data attribute or inline) ── */
 	var bindingRules = {
@@ -200,6 +201,20 @@
 			formatter.format( data.unit_price ) + ' ' + config.i18n.perCopy +
 			'</span>';
 
+		/* Source badge for fallback visibility */
+		var sourceEl = resultsEl.querySelector( '.ppp-bpe-source-badge' );
+		if ( data.source === 'local_fallback' ) {
+			if ( ! sourceEl ) {
+				sourceEl = document.createElement( 'div' );
+				sourceEl.className = 'ppp-bpe-source-badge ppp-bpe-source-fallback';
+				totalEl.parentNode.insertBefore( sourceEl, totalEl.nextSibling );
+			}
+			sourceEl.textContent = config.i18n.fallbackNotice || 'Estimated price (service temporarily unavailable)';
+			sourceEl.style.display = '';
+		} else if ( sourceEl ) {
+			sourceEl.style.display = 'none';
+		}
+
 		resultsEl.style.display = '';
 	}
 
@@ -240,6 +255,11 @@
 				return;
 			}
 			hasCalculated = true;
+			lastOffer = {
+				data:      result.body,
+				signature: result.body.offer_signature || '',
+				source:    result.body.source || 'local'
+			};
 			renderResults( result.body );
 		})
 		.catch( function () {
