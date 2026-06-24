@@ -116,6 +116,8 @@ final class PPP_BPE_Plugin {
 			'printpricepro_bpe_calculator'
 		);
 
+		$this->register_public_assets();
+
 		wp_enqueue_style( 'ppp-bpe-public' );
 		wp_enqueue_script( 'ppp-bpe-public' );
 
@@ -128,7 +130,7 @@ final class PPP_BPE_Plugin {
 			: ( $options['default_country'] ?? 'ES' );
 		$default_currency = $options['default_currency'] ?? 'EUR';
 
-		wp_localize_script( 'ppp-bpe-public', 'pppBpeCalc', array(
+		$calc_data = wp_json_encode( array(
 			'restUrl'        => rest_url( PPP_BPE_Rest::NAMESPACE . '/calculate' ),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
 			'currency'       => $default_currency,
@@ -144,6 +146,12 @@ final class PPP_BPE_Plugin {
 				'comingSoon'   => __( 'Cart integration coming in a future update.', 'printpricepro-bpe' ),
 			),
 		) );
+
+		wp_add_inline_script(
+			'ppp-bpe-public',
+			'window.pppBpeCalc = ' . $calc_data . ';',
+			'before'
+		);
 
 		ob_start();
 		include PPP_BPE_PLUGIN_DIR . 'templates/calculator-placeholder.php';
