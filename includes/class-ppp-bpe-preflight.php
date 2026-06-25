@@ -119,6 +119,14 @@ class PPP_BPE_Preflight {
 	}
 
 	public function start_preflight( WP_REST_Request $request ): WP_REST_Response {
+		$license = PPP_BPE_Plugin::instance()->get_license();
+		if ( null !== $license && ! $license->can_use_preflight() ) {
+			return new WP_REST_Response(
+				array( 'error' => __( 'Preflight requires a Preflight Add-on plan or higher.', 'printpricepro-bpe' ) ),
+				403
+			);
+		}
+
 		if ( ! self::is_enabled() ) {
 			return new WP_REST_Response(
 				array( 'error' => __( 'Preflight is not enabled.', 'printpricepro-bpe' ) ),

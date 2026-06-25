@@ -19,6 +19,7 @@ final class PPP_BPE_Plugin {
 	private ?PPP_BPE_Preflight      $preflight      = null;
 	private ?PPP_BPE_Control_Plane    $control_plane    = null;
 	private ?PPP_BPE_Production_Queue $production_queue = null;
+	private ?PPP_BPE_License          $license          = null;
 
 	public static function instance(): self {
 		if ( null === self::$instance ) {
@@ -46,7 +47,10 @@ final class PPP_BPE_Plugin {
 		$this->production_queue = new PPP_BPE_Production_Queue();
 		$this->production_queue->register_hooks();
 
-		$this->admin = new PPP_BPE_Admin( $this->settings, $this->production_queue );
+		$this->license = new PPP_BPE_License();
+		$this->license->register_hooks();
+
+		$this->admin = new PPP_BPE_Admin( $this->settings, $this->production_queue, $this->license );
 		$this->admin->register_hooks();
 
 		$this->rest = new PPP_BPE_Rest();
@@ -86,6 +90,7 @@ final class PPP_BPE_Plugin {
 		require_once $includes . 'class-ppp-bpe-preflight.php';
 		require_once $includes . 'class-ppp-bpe-control-plane.php';
 		require_once $includes . 'class-ppp-bpe-production-queue.php';
+		require_once $includes . 'class-ppp-bpe-license.php';
 	}
 
 	public static function activate(): void {
@@ -98,7 +103,11 @@ final class PPP_BPE_Plugin {
 	}
 
 	public static function deactivate(): void {
-		// Intentionally empty — do not delete data on deactivation.
+		PPP_BPE_License::cleanup_on_deactivation();
+	}
+
+	public function get_license(): ?PPP_BPE_License {
+		return $this->license;
 	}
 
 	private function is_woocommerce_active(): bool {
@@ -159,6 +168,11 @@ final class PPP_BPE_Plugin {
 			: ( $options['default_country'] ?? 'ES' );
 		$default_currency = $options['default_currency'] ?? 'EUR';
 
+		$show_branding = true;
+		if ( null !== $this->license ) {
+			$show_branding = ! $this->license->can_remove_branding();
+		}
+
 		$calc_data = wp_json_encode( array(
 			'restUrl'        => rest_url( PPP_BPE_Rest::NAMESPACE . '/calculate' ),
 			'addToCartUrl'   => rest_url( PPP_BPE_Rest::NAMESPACE . '/add-to-cart' ),
@@ -167,6 +181,7 @@ final class PPP_BPE_Plugin {
 			'mode'           => $options['mode'] ?? 'local',
 			'defaultCountry' => $default_country,
 			'defaultCopies'  => absint( $atts['default_copies'] ),
+			'showBranding'   => $show_branding,
 			'i18n'           => array(
 				'calculating'    => __( 'Calculating…', 'printpricepro-bpe' ),
 				'calculate'      => __( 'Calculate Price', 'printpricepro-bpe' ),
@@ -179,6 +194,7 @@ final class PPP_BPE_Plugin {
 				'viewCart'       => __( 'View Cart', 'printpricepro-bpe' ),
 				'cartError'      => __( 'Could not add to cart. Please try again.', 'printpricepro-bpe' ),
 				'fallbackNotice' => __( 'Estimated price (service temporarily unavailable)', 'printpricepro-bpe' ),
+				'limitReached'   => __( 'Monthly quote limit reached. Please contact the site administrator.', 'printpricepro-bpe' ),
 			),
 		) );
 

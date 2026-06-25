@@ -39,14 +39,39 @@ class PPP_BPE_Rest {
 	}
 
 	public function calculate( WP_REST_Request $request ): WP_REST_Response {
+		$license = PPP_BPE_Plugin::instance()->get_license();
+
+		if ( null !== $license && $license->is_quote_limit_reached() ) {
+			$usage = $license->get_quote_usage_summary();
+			return new WP_REST_Response(
+				array(
+					'errors'        => array( __( 'Monthly quote limit reached. Please upgrade your plan for unlimited quotes.', 'printpricepro-bpe' ) ),
+					'limit_reached' => true,
+					'usage'         => $usage,
+				),
+				429
+			);
+		}
+
 		$options = get_option( PPP_BPE_Settings::OPTION_NAME, array() );
 		$mode    = $options['mode'] ?? 'local';
 
 		if ( 'api' === $mode || 'federated_node' === $mode ) {
-			return $this->calculate_via_api( $request, $options );
+			$response = $this->calculate_via_api( $request, $options );
+		} else {
+			$response = $this->calculate_local( $request );
 		}
 
-		return $this->calculate_local( $request );
+		if ( 200 === $response->get_status() && null !== $license ) {
+			$license->record_event( 'quote_calculated' );
+
+			$data = $response->get_data();
+			$data['show_branding'] = ! $license->can_remove_branding();
+			$data['usage']         = $license->get_quote_usage_summary();
+			$response->set_data( $data );
+		}
+
+		return $response;
 	}
 
 	private function calculate_local( WP_REST_Request $request ): WP_REST_Response {
@@ -175,6 +200,10 @@ class PPP_BPE_Rest {
 				'preflight'      => PPP_BPE_Preflight::is_enabled(),
 				'marketplace'    => false,
 			),
+			'license'            => array(
+				'plan'   => $this->get_license_plan(),
+				'active' => $this->is_license_active(),
+			),
 			'timestamp'          => current_time( 'c' ),
 		);
 
@@ -184,6 +213,16 @@ class PPP_BPE_Rest {
 		}
 
 		return new WP_REST_Response( $data, 200 );
+	}
+
+	private function get_license_plan(): string {
+		$license = PPP_BPE_Plugin::instance()->get_license();
+		return null !== $license ? $license->get_plan() : PPP_BPE_License::PLAN_FREE;
+	}
+
+	private function is_license_active(): bool {
+		$license = PPP_BPE_Plugin::instance()->get_license();
+		return null !== $license && $license->is_active();
 	}
 
 	private function log( string $message ): void {

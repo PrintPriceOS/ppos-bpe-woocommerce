@@ -141,6 +141,14 @@ class PPP_BPE_File_Upload {
 	}
 
 	public function handle_upload( WP_REST_Request $request ): WP_REST_Response {
+		$license = PPP_BPE_Plugin::instance()->get_license();
+		if ( null !== $license && ! $license->can_upload_files() ) {
+			return new WP_REST_Response(
+				array( 'error' => __( 'PDF upload requires a Pro plan or higher.', 'printpricepro-bpe' ) ),
+				403
+			);
+		}
+
 		$order_id = $request->get_param( 'order_id' );
 		$order    = wc_get_order( $order_id );
 
@@ -226,6 +234,11 @@ class PPP_BPE_File_Upload {
 		}
 
 		do_action( 'ppp_bpe_files_uploaded', $order );
+
+		$license = PPP_BPE_Plugin::instance()->get_license();
+		if ( null !== $license ) {
+			$license->record_event( 'files_uploaded' );
+		}
 
 		$preflight_status = $order->get_meta( '_ppp_bpe_preflight_status' );
 

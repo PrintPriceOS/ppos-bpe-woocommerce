@@ -234,6 +234,11 @@ class PPP_BPE_Control_Plane {
 			return;
 		}
 
+		$license = PPP_BPE_Plugin::instance()->get_license();
+		if ( null !== $license && ! $license->can_use_control_plane() ) {
+			return;
+		}
+
 		if ( ! $this->order_has_bpe_items( $order ) ) {
 			return;
 		}

@@ -244,6 +244,11 @@ class PPP_BPE_Cart {
 
 		$item->add_meta_data( self::META_PREFIX_INT . 'signature', sanitize_text_field( $values['ppp_bpe_signature'] ?? '' ), true );
 		$item->add_meta_data( self::META_PREFIX_INT . 'source', sanitize_text_field( $offer['source'] ?? 'local' ), true );
+
+		$license = PPP_BPE_Plugin::instance()->get_license();
+		if ( null !== $license ) {
+			$license->record_event( 'order_created' );
+		}
 	}
 
 	/**

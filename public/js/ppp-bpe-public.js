@@ -262,6 +262,11 @@
 		.then( function ( result ) {
 			hideLoading();
 			if ( ! result.ok ) {
+				if ( result.body.limit_reached ) {
+					showError( config.i18n.limitReached || result.body.errors.join( '. ' ) );
+					submitBtn.disabled = true;
+					return;
+				}
 				var msg = result.body.errors
 					? result.body.errors.join( '. ' )
 					: config.i18n.errorGeneric;
@@ -335,6 +340,27 @@
 			cartMsgEl.textContent = config.i18n.cartError;
 			cartMsgEl.style.display = '';
 		});
+	}
+
+	/* ── Branding ── */
+
+	function renderBranding( show ) {
+		var container = document.getElementById( 'printpricepro-bpe-calculator' );
+		if ( ! container ) { return; }
+
+		var existing = container.querySelector( '.ppp-bpe-branding' );
+		if ( show && ! existing ) {
+			var el = document.createElement( 'div' );
+			el.className = 'ppp-bpe-branding';
+			el.innerHTML = 'Powered by <a href="https://printpricepro.com" target="_blank" rel="noopener">PrintPricePro</a>';
+			container.appendChild( el );
+		} else if ( ! show && existing ) {
+			existing.parentNode.removeChild( existing );
+		}
+	}
+
+	if ( config.showBranding ) {
+		renderBranding( true );
 	}
 
 	/* ── Event listeners ── */
