@@ -13,19 +13,21 @@ class PPP_BPE_Settings {
 	public const OPTION_NAME  = 'ppp_bpe_options';
 
 	private const DEFAULTS = array(
-		'mode'                => 'local',
-		'bpe_api_url'         => '',
-		'license_key'         => '',
-		'tenant_id'           => '',
-		'node_id'             => '',
-		'webhook_secret'      => '',
-		'default_currency'    => 'EUR',
-		'default_country'     => 'ES',
-		'max_upload_size_mb'  => 100,
-		'preflight_enabled'   => false,
-		'preflight_api_url'   => '',
+		'mode'                 => 'local',
+		'bpe_api_url'          => '',
+		'license_key'          => '',
+		'tenant_id'            => '',
+		'node_id'              => '',
+		'webhook_secret'       => '',
+		'control_plane_url'    => '',
+		'node_api_key'         => '',
+		'default_currency'     => 'EUR',
+		'default_country'      => 'ES',
+		'max_upload_size_mb'   => 100,
+		'preflight_enabled'    => false,
+		'preflight_api_url'    => '',
 		'preflight_auto_start' => false,
-		'debug_mode'          => false,
+		'debug_mode'           => false,
 	);
 
 	private const VALID_MODES = array( 'local', 'api', 'federated_node' );
@@ -125,6 +127,29 @@ class PPP_BPE_Settings {
 		);
 
 		add_settings_section(
+			'ppp_bpe_control_plane',
+			__( 'Control Plane / Node Settings', 'printpricepro-bpe' ),
+			array( $this, 'render_control_plane_section' ),
+			'printpricepro-bpe'
+		);
+
+		add_settings_field(
+			'ppp_bpe_control_plane_url',
+			__( 'Control Plane URL', 'printpricepro-bpe' ),
+			array( $this, 'render_control_plane_url_field' ),
+			'printpricepro-bpe',
+			'ppp_bpe_control_plane'
+		);
+
+		add_settings_field(
+			'ppp_bpe_node_api_key',
+			__( 'Node API Key', 'printpricepro-bpe' ),
+			array( $this, 'render_node_api_key_field' ),
+			'printpricepro-bpe',
+			'ppp_bpe_control_plane'
+		);
+
+		add_settings_section(
 			'ppp_bpe_preflight',
 			__( 'Preflight Settings', 'printpricepro-bpe' ),
 			null,
@@ -201,6 +226,14 @@ class PPP_BPE_Settings {
 
 		$sanitized['webhook_secret'] = isset( $input['webhook_secret'] )
 			? substr( sanitize_text_field( $input['webhook_secret'] ), 0, 128 )
+			: '';
+
+		$sanitized['control_plane_url'] = isset( $input['control_plane_url'] )
+			? esc_url_raw( trim( $input['control_plane_url'] ) )
+			: '';
+
+		$sanitized['node_api_key'] = isset( $input['node_api_key'] )
+			? substr( sanitize_text_field( $input['node_api_key'] ), 0, 128 )
 			: '';
 
 		$sanitized['preflight_enabled'] = ! empty( $input['preflight_enabled'] );
@@ -408,6 +441,42 @@ class PPP_BPE_Settings {
 		</label>
 		<p class="description">
 			<?php esc_html_e( 'When enabled, preflight starts immediately after the customer uploads both Interior and Cover PDFs. Otherwise, preflight must be triggered manually.', 'printpricepro-bpe' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_control_plane_section(): void {
+		?>
+		<p class="description">
+			<?php esc_html_e( 'These settings are required for Federated Node mode. They connect your print house to the PrintPrice OS Control Plane for order sync, file dispatch, and production tracking.', 'printpricepro-bpe' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_control_plane_url_field(): void {
+		$options = $this->get_all_options();
+		?>
+		<input type="url"
+			name="<?php echo esc_attr( self::OPTION_NAME ); ?>[control_plane_url]"
+			value="<?php echo esc_attr( $options['control_plane_url'] ); ?>"
+			class="regular-text"
+			placeholder="https://cp.printpricepro.com" />
+		<p class="description">
+			<?php esc_html_e( 'Base URL of the PrintPrice OS Control Plane. Required for Federated Node mode.', 'printpricepro-bpe' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_node_api_key_field(): void {
+		$options = $this->get_all_options();
+		?>
+		<input type="password"
+			name="<?php echo esc_attr( self::OPTION_NAME ); ?>[node_api_key]"
+			value="<?php echo esc_attr( $options['node_api_key'] ); ?>"
+			class="regular-text"
+			autocomplete="off" />
+		<p class="description">
+			<?php esc_html_e( 'API key for authenticating with the Control Plane. Provided during node onboarding. Never exposed to the frontend.', 'printpricepro-bpe' ); ?>
 		</p>
 		<?php
 	}

@@ -225,6 +225,8 @@ class PPP_BPE_File_Upload {
 			$this->preflight->trigger_after_upload( $order );
 		}
 
+		do_action( 'ppp_bpe_files_uploaded', $order );
+
 		$preflight_status = $order->get_meta( '_ppp_bpe_preflight_status' );
 
 		return new WP_REST_Response(

@@ -16,7 +16,8 @@ final class PPP_BPE_Plugin {
 	private ?PPP_BPE_Rest        $rest        = null;
 	private ?PPP_BPE_Cart        $cart        = null;
 	private ?PPP_BPE_File_Upload $file_upload = null;
-	private ?PPP_BPE_Preflight   $preflight   = null;
+	private ?PPP_BPE_Preflight      $preflight      = null;
+	private ?PPP_BPE_Control_Plane $control_plane  = null;
 
 	public static function instance(): self {
 		if ( null === self::$instance ) {
@@ -58,6 +59,9 @@ final class PPP_BPE_Plugin {
 
 		$this->file_upload->set_preflight( $this->preflight );
 
+		$this->control_plane = new PPP_BPE_Control_Plane();
+		$this->control_plane->register_hooks();
+
 		add_action( 'init', array( $this, 'register_shortcode' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_public_assets' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
@@ -76,6 +80,7 @@ final class PPP_BPE_Plugin {
 		require_once $includes . 'class-ppp-bpe-cart.php';
 		require_once $includes . 'class-ppp-bpe-file-upload.php';
 		require_once $includes . 'class-ppp-bpe-preflight.php';
+		require_once $includes . 'class-ppp-bpe-control-plane.php';
 	}
 
 	public static function activate(): void {
