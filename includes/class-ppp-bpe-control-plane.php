@@ -26,6 +26,7 @@ class PPP_BPE_Control_Plane {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 
 		add_action( 'woocommerce_checkout_order_created', array( $this, 'sync_order_on_create' ), 20 );
+		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'sync_order_on_create' ), 20 );
 
 		add_action( 'woocommerce_order_status_changed', array( $this, 'sync_order_on_status_change' ), 10, 3 );
 

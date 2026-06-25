@@ -24,6 +24,7 @@ class PPP_BPE_Production_Queue {
 	public function register_hooks(): void {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 		add_action( 'woocommerce_checkout_order_created', array( $this, 'set_initial_production_status' ), 20 );
+		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'set_initial_production_status' ), 20 );
 		add_action( 'woocommerce_view_order', array( $this, 'render_customer_tracking' ), 15 );
 	}
 

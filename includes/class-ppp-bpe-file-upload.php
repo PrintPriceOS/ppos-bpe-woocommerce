@@ -34,6 +34,7 @@ class PPP_BPE_File_Upload {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 
 		add_action( 'woocommerce_checkout_order_created', array( $this, 'set_initial_file_status' ) );
+		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'set_initial_file_status' ) );
 
 		add_action( 'woocommerce_thankyou', array( $this, 'render_thankyou_upload' ), 5 );
 		add_action( 'woocommerce_view_order', array( $this, 'render_order_upload' ), 5 );
