@@ -18,9 +18,13 @@ class PPP_BPE_Settings {
 		'license_key'         => '',
 		'tenant_id'           => '',
 		'node_id'             => '',
+		'webhook_secret'      => '',
 		'default_currency'    => 'EUR',
 		'default_country'     => 'ES',
 		'max_upload_size_mb'  => 100,
+		'preflight_enabled'   => false,
+		'preflight_api_url'   => '',
+		'preflight_auto_start' => false,
 		'debug_mode'          => false,
 	);
 
@@ -113,6 +117,45 @@ class PPP_BPE_Settings {
 		);
 
 		add_settings_field(
+			'ppp_bpe_webhook_secret',
+			__( 'Webhook Secret', 'printpricepro-bpe' ),
+			array( $this, 'render_webhook_secret_field' ),
+			'printpricepro-bpe',
+			'ppp_bpe_general'
+		);
+
+		add_settings_section(
+			'ppp_bpe_preflight',
+			__( 'Preflight Settings', 'printpricepro-bpe' ),
+			null,
+			'printpricepro-bpe'
+		);
+
+		add_settings_field(
+			'ppp_bpe_preflight_enabled',
+			__( 'Enable Preflight', 'printpricepro-bpe' ),
+			array( $this, 'render_preflight_enabled_field' ),
+			'printpricepro-bpe',
+			'ppp_bpe_preflight'
+		);
+
+		add_settings_field(
+			'ppp_bpe_preflight_api_url',
+			__( 'Preflight API URL', 'printpricepro-bpe' ),
+			array( $this, 'render_preflight_api_url_field' ),
+			'printpricepro-bpe',
+			'ppp_bpe_preflight'
+		);
+
+		add_settings_field(
+			'ppp_bpe_preflight_auto_start',
+			__( 'Auto-start Preflight', 'printpricepro-bpe' ),
+			array( $this, 'render_preflight_auto_start_field' ),
+			'printpricepro-bpe',
+			'ppp_bpe_preflight'
+		);
+
+		add_settings_field(
 			'ppp_bpe_debug',
 			__( 'Debug Mode', 'printpricepro-bpe' ),
 			array( $this, 'render_debug_field' ),
@@ -155,6 +198,18 @@ class PPP_BPE_Settings {
 		$sanitized['max_upload_size_mb'] = isset( $input['max_upload_size_mb'] )
 			? max( 1, min( 500, absint( $input['max_upload_size_mb'] ) ) )
 			: 100;
+
+		$sanitized['webhook_secret'] = isset( $input['webhook_secret'] )
+			? substr( sanitize_text_field( $input['webhook_secret'] ), 0, 128 )
+			: '';
+
+		$sanitized['preflight_enabled'] = ! empty( $input['preflight_enabled'] );
+
+		$sanitized['preflight_api_url'] = isset( $input['preflight_api_url'] )
+			? esc_url_raw( trim( $input['preflight_api_url'] ) )
+			: '';
+
+		$sanitized['preflight_auto_start'] = ! empty( $input['preflight_auto_start'] );
 
 		$sanitized['debug_mode'] = ! empty( $input['debug_mode'] );
 
@@ -293,6 +348,66 @@ class PPP_BPE_Settings {
 			step="1" />
 		<p class="description">
 			<?php esc_html_e( 'Maximum file size in megabytes for PDF uploads (1–500 MB). Ensure your server php.ini upload_max_filesize and post_max_size allow this.', 'printpricepro-bpe' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_webhook_secret_field(): void {
+		$options = $this->get_all_options();
+		?>
+		<input type="password"
+			name="<?php echo esc_attr( self::OPTION_NAME ); ?>[webhook_secret]"
+			value="<?php echo esc_attr( $options['webhook_secret'] ); ?>"
+			class="regular-text"
+			autocomplete="off" />
+		<p class="description">
+			<?php esc_html_e( 'Shared secret for verifying incoming webhook signatures (HMAC-SHA256). Used by Preflight and Control Plane callbacks.', 'printpricepro-bpe' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_preflight_enabled_field(): void {
+		$options = $this->get_all_options();
+		?>
+		<label>
+			<input type="checkbox"
+				name="<?php echo esc_attr( self::OPTION_NAME ); ?>[preflight_enabled]"
+				value="1"
+				<?php checked( $options['preflight_enabled'] ); ?> />
+			<?php esc_html_e( 'Enable preflight file validation', 'printpricepro-bpe' ); ?>
+		</label>
+		<p class="description">
+			<?php esc_html_e( 'Requires API or Federated Node mode. Sends uploaded PDFs to the Preflight service for QA checks before production.', 'printpricepro-bpe' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_preflight_api_url_field(): void {
+		$options = $this->get_all_options();
+		?>
+		<input type="url"
+			name="<?php echo esc_attr( self::OPTION_NAME ); ?>[preflight_api_url]"
+			value="<?php echo esc_attr( $options['preflight_api_url'] ); ?>"
+			class="regular-text"
+			placeholder="<?php echo esc_attr( $options['bpe_api_url'] ); ?>" />
+		<p class="description">
+			<?php esc_html_e( 'Base URL for the Preflight service. Leave empty to use the BPE API URL.', 'printpricepro-bpe' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_preflight_auto_start_field(): void {
+		$options = $this->get_all_options();
+		?>
+		<label>
+			<input type="checkbox"
+				name="<?php echo esc_attr( self::OPTION_NAME ); ?>[preflight_auto_start]"
+				value="1"
+				<?php checked( $options['preflight_auto_start'] ); ?> />
+			<?php esc_html_e( 'Automatically start preflight when both files are uploaded', 'printpricepro-bpe' ); ?>
+		</label>
+		<p class="description">
+			<?php esc_html_e( 'When enabled, preflight starts immediately after the customer uploads both Interior and Cover PDFs. Otherwise, preflight must be triggered manually.', 'printpricepro-bpe' ); ?>
 		</p>
 		<?php
 	}

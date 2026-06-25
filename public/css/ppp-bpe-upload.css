@@ -72,6 +72,18 @@
 	border: 1px solid #fca5a5;
 }
 
+.ppp-bpe-upload__status--pending {
+	color: #2563eb;
+	background: #eff6ff;
+	border: 1px solid #93c5fd;
+	animation: ppp-bpe-upload-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ppp-bpe-upload-pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.6; }
+}
+
 /* Fields layout */
 .ppp-bpe-upload__fields {
 	display: grid;

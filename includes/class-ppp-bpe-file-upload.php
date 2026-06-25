@@ -24,6 +24,12 @@ class PPP_BPE_File_Upload {
 
 	private const DEFAULT_MAX_SIZE_MB = 100;
 
+	private ?PPP_BPE_Preflight $preflight = null;
+
+	public function set_preflight( PPP_BPE_Preflight $preflight ): void {
+		$this->preflight = $preflight;
+	}
+
 	public function register_hooks(): void {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 
@@ -215,10 +221,17 @@ class PPP_BPE_File_Upload {
 			)
 		);
 
+		if ( $this->preflight ) {
+			$this->preflight->trigger_after_upload( $order );
+		}
+
+		$preflight_status = $order->get_meta( '_ppp_bpe_preflight_status' );
+
 		return new WP_REST_Response(
 			array(
-				'uploaded' => $results,
-				'status'   => $order->get_meta( self::META_FILE_STATUS ),
+				'uploaded'         => $results,
+				'status'           => $order->get_meta( self::META_FILE_STATUS ),
+				'preflight_status' => $preflight_status ?: null,
 			),
 			200
 		);
@@ -326,15 +339,23 @@ class PPP_BPE_File_Upload {
 		$cover    = $order->get_meta( self::META_COVER_FILE );
 
 		$status_labels = array(
-			self::STATUS_FILES_REQUIRED => __( 'Files Required', 'printpricepro-bpe' ),
-			self::STATUS_FILES_UPLOADED => __( 'Files Uploaded', 'printpricepro-bpe' ),
-			self::STATUS_FILES_REJECTED => __( 'Files Rejected', 'printpricepro-bpe' ),
+			self::STATUS_FILES_REQUIRED         => __( 'Files Required', 'printpricepro-bpe' ),
+			self::STATUS_FILES_UPLOADED         => __( 'Files Uploaded', 'printpricepro-bpe' ),
+			self::STATUS_FILES_REJECTED         => __( 'Files Rejected', 'printpricepro-bpe' ),
+			PPP_BPE_Preflight::STATUS_PENDING   => __( 'Preflight Checking…', 'printpricepro-bpe' ),
+			PPP_BPE_Preflight::STATUS_PASSED    => __( 'Preflight Passed', 'printpricepro-bpe' ),
+			PPP_BPE_Preflight::STATUS_WARNINGS  => __( 'Preflight Warnings', 'printpricepro-bpe' ),
+			PPP_BPE_Preflight::STATUS_BLOCKED   => __( 'Preflight Blocked', 'printpricepro-bpe' ),
 		);
 
 		$status_colors = array(
-			self::STATUS_FILES_REQUIRED => '#d97706',
-			self::STATUS_FILES_UPLOADED => '#16a34a',
-			self::STATUS_FILES_REJECTED => '#dc2626',
+			self::STATUS_FILES_REQUIRED         => '#d97706',
+			self::STATUS_FILES_UPLOADED         => '#16a34a',
+			self::STATUS_FILES_REJECTED         => '#dc2626',
+			PPP_BPE_Preflight::STATUS_PENDING   => '#2563eb',
+			PPP_BPE_Preflight::STATUS_PASSED    => '#16a34a',
+			PPP_BPE_Preflight::STATUS_WARNINGS  => '#d97706',
+			PPP_BPE_Preflight::STATUS_BLOCKED   => '#dc2626',
 		);
 		?>
 		<div class="ppp-bpe-admin-files" style="margin-top:16px;">
@@ -598,6 +619,7 @@ class PPP_BPE_File_Upload {
 				'statusUploaded'  => __( 'Files Uploaded', 'printpricepro-bpe' ),
 				'statusRejected'  => __( 'Files Rejected', 'printpricepro-bpe' ),
 				'allUploaded'     => __( 'All production files have been uploaded. We will begin processing your order.', 'printpricepro-bpe' ),
+				'preflightStarted' => __( 'Preflight check has been started automatically.', 'printpricepro-bpe' ),
 			),
 		) );
 

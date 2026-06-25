@@ -60,11 +60,19 @@
 		labels.files_required = i18n.statusRequired;
 		labels.files_uploaded = i18n.statusUploaded;
 		labels.files_rejected = i18n.statusRejected;
+		labels.preflight_pending = i18n.preflightPending || 'Preflight Checking…';
+		labels.preflight_passed = i18n.preflightPassed || 'Preflight Passed';
+		labels.preflight_warnings = i18n.preflightWarnings || 'Preflight Warnings';
+		labels.preflight_blocked = i18n.preflightBlocked || 'Preflight Blocked';
 
 		var classes = {};
 		classes.files_required = 'ppp-bpe-upload__status--required';
 		classes.files_uploaded = 'ppp-bpe-upload__status--uploaded';
 		classes.files_rejected = 'ppp-bpe-upload__status--rejected';
+		classes.preflight_pending = 'ppp-bpe-upload__status--pending';
+		classes.preflight_passed = 'ppp-bpe-upload__status--uploaded';
+		classes.preflight_warnings = 'ppp-bpe-upload__status--required';
+		classes.preflight_blocked = 'ppp-bpe-upload__status--rejected';
 
 		statusEl.textContent = labels[ status ] || status;
 		statusEl.className = 'ppp-bpe-upload__status ' + ( classes[ status ] || '' );
@@ -250,7 +258,9 @@
 				}
 				showError( partialErrors.join( ' ' ) );
 			} else {
-				if ( result.body.status === 'files_uploaded' ) {
+				if ( result.body.preflight_status === 'preflight_pending' ) {
+					showSuccess( i18n.allUploaded + ' ' + ( i18n.preflightStarted || '' ) );
+				} else if ( result.body.status === 'files_uploaded' ) {
 					showSuccess( i18n.allUploaded );
 				} else {
 					showSuccess( i18n.success );

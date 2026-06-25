@@ -170,8 +170,8 @@ class PPP_BPE_Rest {
 			'mode'               => $mode,
 			'base_product_id'    => (int) get_option( PPP_BPE_WooCommerce::OPTION_PRODUCT_ID, 0 ),
 			'production_flags'   => array(
-				'os_connection' => false,
-				'preflight'     => false,
+				'os_connection' => 'federated_node' === $mode,
+				'preflight'     => PPP_BPE_Preflight::is_enabled(),
 				'marketplace'   => false,
 			),
 			'timestamp'          => current_time( 'c' ),

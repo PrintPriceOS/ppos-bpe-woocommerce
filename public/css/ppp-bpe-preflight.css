@@ -1,0 +1,224 @@
+/* PrintPricePro BPE — Preflight Status Styles */
+
+.ppp-bpe-preflight {
+	--ppp-accent: #2563eb;
+	--ppp-accent-hover: #1d4ed8;
+	--ppp-border: #d1d5db;
+	--ppp-bg-muted: #f8fafc;
+	--ppp-text: #1f2937;
+	--ppp-text-muted: #6b7280;
+	--ppp-error: #dc2626;
+	--ppp-error-bg: #fef2f2;
+	--ppp-success: #16a34a;
+	--ppp-success-bg: #f0fdf4;
+	--ppp-warning: #d97706;
+	--ppp-warning-bg: #fffbeb;
+	--ppp-info: #2563eb;
+	--ppp-info-bg: #eff6ff;
+	--ppp-radius: 6px;
+
+	max-width: 800px;
+	margin: 24px auto;
+	padding: 24px;
+	background: #fff;
+	border: 1px solid var(--ppp-border);
+	border-radius: 8px;
+	font-family: inherit;
+	color: var(--ppp-text);
+	line-height: 1.5;
+}
+
+.ppp-bpe-preflight *,
+.ppp-bpe-preflight *::before,
+.ppp-bpe-preflight *::after {
+	box-sizing: border-box;
+}
+
+.ppp-bpe-preflight__title {
+	font-size: 1.3em;
+	font-weight: 700;
+	margin: 0 0 8px 0;
+}
+
+.ppp-bpe-preflight__description {
+	color: var(--ppp-text-muted);
+	margin: 0 0 16px 0;
+	font-size: 0.95em;
+}
+
+/* Status badge */
+.ppp-bpe-preflight__status {
+	display: inline-block;
+	padding: 4px 12px;
+	border-radius: 20px;
+	font-size: 0.85em;
+	font-weight: 600;
+	margin-bottom: 12px;
+}
+
+.ppp-bpe-preflight__status--none {
+	display: none;
+}
+
+.ppp-bpe-preflight__status--pending {
+	color: var(--ppp-info);
+	background: var(--ppp-info-bg);
+	border: 1px solid #93c5fd;
+	animation: ppp-bpe-pulse 2s ease-in-out infinite;
+}
+
+.ppp-bpe-preflight__status--passed {
+	color: var(--ppp-success);
+	background: var(--ppp-success-bg);
+	border: 1px solid #86efac;
+}
+
+.ppp-bpe-preflight__status--warnings {
+	color: var(--ppp-warning);
+	background: var(--ppp-warning-bg);
+	border: 1px solid #fbbf24;
+}
+
+.ppp-bpe-preflight__status--blocked {
+	color: var(--ppp-error);
+	background: var(--ppp-error-bg);
+	border: 1px solid #fca5a5;
+}
+
+@keyframes ppp-bpe-pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.6; }
+}
+
+/* Message */
+.ppp-bpe-preflight__message {
+	margin: 0 0 16px 0;
+	font-size: 0.95em;
+	color: var(--ppp-text-muted);
+}
+
+/* Report */
+.ppp-bpe-preflight__report {
+	margin: 16px 0;
+}
+
+.ppp-bpe-preflight__report-title {
+	font-size: 1.05em;
+	font-weight: 600;
+	margin: 0 0 12px 0;
+}
+
+.ppp-bpe-preflight__table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9em;
+}
+
+.ppp-bpe-preflight__table th {
+	text-align: left;
+	padding: 8px 12px;
+	background: var(--ppp-bg-muted);
+	border-bottom: 2px solid var(--ppp-border);
+	font-weight: 600;
+	font-size: 0.85em;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: var(--ppp-text-muted);
+}
+
+.ppp-bpe-preflight__table td {
+	padding: 8px 12px;
+	border-bottom: 1px solid var(--ppp-border);
+	vertical-align: top;
+}
+
+.ppp-bpe-preflight__table tr:last-child td {
+	border-bottom: none;
+}
+
+/* Severity badges */
+.ppp-bpe-preflight__severity {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 12px;
+	font-size: 0.8em;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.ppp-bpe-preflight__severity--error {
+	color: var(--ppp-error);
+	background: var(--ppp-error-bg);
+}
+
+.ppp-bpe-preflight__severity--warning {
+	color: var(--ppp-warning);
+	background: var(--ppp-warning-bg);
+}
+
+.ppp-bpe-preflight__severity--info {
+	color: var(--ppp-info);
+	background: var(--ppp-info-bg);
+}
+
+.ppp-bpe-preflight__check-message {
+	color: var(--ppp-text-muted);
+	font-size: 0.9em;
+}
+
+/* Summary */
+.ppp-bpe-preflight__summary {
+	margin: 12px 0 0 0;
+	padding: 12px 16px;
+	background: var(--ppp-bg-muted);
+	border-radius: var(--ppp-radius);
+	font-size: 0.9em;
+	color: var(--ppp-text-muted);
+	font-style: italic;
+}
+
+/* Error */
+.ppp-bpe-preflight__error {
+	color: var(--ppp-error);
+	background: var(--ppp-error-bg);
+	padding: 12px 16px;
+	border-radius: var(--ppp-radius);
+	margin-top: 16px;
+	font-size: 0.95em;
+}
+
+/* Actions */
+.ppp-bpe-preflight__actions {
+	margin-top: 16px;
+}
+
+.ppp-bpe-preflight__button {
+	display: inline-block;
+	padding: 10px 24px;
+	background: var(--ppp-accent);
+	color: #fff;
+	border: none;
+	border-radius: var(--ppp-radius);
+	font-size: 0.95em;
+	font-weight: 600;
+	font-family: inherit;
+	cursor: pointer;
+	transition: background-color 0.15s;
+}
+
+.ppp-bpe-preflight__button:hover {
+	background: var(--ppp-accent-hover);
+}
+
+.ppp-bpe-preflight__button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+	.ppp-bpe-preflight__table th:first-child,
+	.ppp-bpe-preflight__table td:first-child {
+		display: none;
+	}
+}
