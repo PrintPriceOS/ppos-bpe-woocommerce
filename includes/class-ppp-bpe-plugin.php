@@ -17,7 +17,8 @@ final class PPP_BPE_Plugin {
 	private ?PPP_BPE_Cart        $cart        = null;
 	private ?PPP_BPE_File_Upload $file_upload = null;
 	private ?PPP_BPE_Preflight      $preflight      = null;
-	private ?PPP_BPE_Control_Plane $control_plane  = null;
+	private ?PPP_BPE_Control_Plane    $control_plane    = null;
+	private ?PPP_BPE_Production_Queue $production_queue = null;
 
 	public static function instance(): self {
 		if ( null === self::$instance ) {
@@ -42,7 +43,10 @@ final class PPP_BPE_Plugin {
 		$this->settings = new PPP_BPE_Settings();
 		$this->settings->register_hooks();
 
-		$this->admin = new PPP_BPE_Admin( $this->settings );
+		$this->production_queue = new PPP_BPE_Production_Queue();
+		$this->production_queue->register_hooks();
+
+		$this->admin = new PPP_BPE_Admin( $this->settings, $this->production_queue );
 		$this->admin->register_hooks();
 
 		$this->rest = new PPP_BPE_Rest();
@@ -81,6 +85,7 @@ final class PPP_BPE_Plugin {
 		require_once $includes . 'class-ppp-bpe-file-upload.php';
 		require_once $includes . 'class-ppp-bpe-preflight.php';
 		require_once $includes . 'class-ppp-bpe-control-plane.php';
+		require_once $includes . 'class-ppp-bpe-production-queue.php';
 	}
 
 	public static function activate(): void {

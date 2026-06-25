@@ -9,11 +9,13 @@ defined( 'ABSPATH' ) || exit;
 
 class PPP_BPE_Admin {
 
-	private PPP_BPE_Settings $settings;
+	private PPP_BPE_Settings         $settings;
+	private PPP_BPE_Production_Queue $production_queue;
 	private array $page_hooks = array();
 
-	public function __construct( PPP_BPE_Settings $settings ) {
-		$this->settings = $settings;
+	public function __construct( PPP_BPE_Settings $settings, PPP_BPE_Production_Queue $production_queue ) {
+		$this->settings         = $settings;
+		$this->production_queue = $production_queue;
 	}
 
 	public function register_hooks(): void {
@@ -51,8 +53,8 @@ class PPP_BPE_Admin {
 
 		$this->page_hooks[] = add_submenu_page(
 			'printpricepro-bpe',
-			__( 'Print Orders', 'printpricepro-bpe' ),
-			__( 'Orders', 'printpricepro-bpe' ),
+			__( 'Production Queue', 'printpricepro-bpe' ),
+			__( 'Production Queue', 'printpricepro-bpe' ),
 			'manage_woocommerce',
 			'printpricepro-bpe-orders',
 			array( $this, 'render_orders_page' )
@@ -89,15 +91,7 @@ class PPP_BPE_Admin {
 	}
 
 	public function render_orders_page(): void {
-		?>
-		<div class="wrap ppp-bpe-admin-wrap">
-			<h1><?php esc_html_e( 'Print Orders', 'printpricepro-bpe' ); ?></h1>
-			<div class="ppp-bpe-placeholder-page">
-				<h2><?php esc_html_e( 'Coming Soon', 'printpricepro-bpe' ); ?></h2>
-				<p><?php esc_html_e( 'Print order management will be available in a future release. You will be able to track orders through quote, file upload, preflight, and production stages.', 'printpricepro-bpe' ); ?></p>
-			</div>
-		</div>
-		<?php
+		$this->production_queue->render_queue_page();
 	}
 
 	public function render_join_os_page(): void {
