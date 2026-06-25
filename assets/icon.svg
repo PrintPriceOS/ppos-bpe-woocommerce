@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <rect width="256" height="256" rx="32" fill="#1e40af"/>
+  <g transform="translate(48, 40)">
+    <!-- Book shape -->
+    <path d="M20 20 L20 156 Q80 140 80 140 Q80 140 140 156 L140 20 Q80 36 80 36 Q80 36 20 20Z" fill="#ffffff" opacity="0.95"/>
+    <line x1="80" y1="36" x2="80" y2="140" stroke="#1e40af" stroke-width="2"/>
+    <!-- Price tag -->
+    <circle cx="120" cy="48" r="24" fill="#f59e0b"/>
+    <text x="120" y="54" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="20" fill="#1e40af">$</text>
+  </g>
+  <text x="128" y="224" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="22" fill="#ffffff">PPP</text>
+</svg>

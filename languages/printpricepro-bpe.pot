@@ -1,0 +1,1348 @@
+# Copyright (C) 2026 PrintPricePro
+# This file is distributed under the same license as the PrintPricePro BPE for WooCommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PrintPricePro BPE for WooCommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-25 15:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: includes/class-ppp-bpe-admin.php:203
+msgid "%1$d of %2$d quotes used this month"
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:154
+msgid "%1$s requires at least %2$d pages."
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:165
+msgid "%1$s supports a maximum of %2$d pages."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:195
+msgid "%d quotes this month (unlimited)"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:234
+msgid "%d quotes/month"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:404
+msgid "%s copies"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:400
+msgid "%s pp"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:276
+msgid "API"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:479
+msgid "API key for authenticating with the Control Plane. Provided during node onboarding. Never exposed to the frontend."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:241
+msgid "API pricing"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:109
+msgid "Accepted"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:390
+msgid "Action"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:114
+#: includes/class-ppp-bpe-production-queue.php:494
+msgid "Action Required"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:375
+msgid "Actions"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:176
+#: includes/class-ppp-bpe-admin.php:310
+#: includes/class-ppp-bpe-admin.php:317
+msgid "Activate"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:413
+msgid "Activate advanced Preflight file validation."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:147
+msgid "Activated"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:293
+msgid "Activating…"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:308
+msgid "Activation failed."
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:479
+msgid "Add Preflight"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:333
+msgid "Add a note (optional):"
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:191
+#: templates/calculator-placeholder.php:128
+msgid "Add to Cart"
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:193
+msgid "Added to Cart!"
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:192
+msgid "Adding…"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:350
+msgid "All"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:636
+msgid "All production files have been uploaded. We will begin processing your order."
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:188
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:325
+msgid "Are you sure you want to deactivate your license? You will revert to the Free plan."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:177
+msgid "Auto-start Preflight"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:440
+msgid "Automatically start preflight when both files are uploaded"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:67
+msgid "BPE API URL"
+msgstr ""
+
+#: includes/class-ppp-bpe-api-client.php:120
+msgid "BPE API returned HTTP %d."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:427
+msgid "Base URL for the Preflight service. Leave empty to use the BPE API URL."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:465
+msgid "Base URL of the PrintPrice OS Control Plane. Required for Federated Node mode."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:297
+msgid "Base URL of the PrintPricePro BPE API. Required for API and Federated Node modes."
+msgstr ""
+
+#: includes/class-ppp-bpe-woocommerce.php:37
+msgid "Base product for PrintPricePro book orders. Do not delete."
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:103
+msgid "Base product not found. Please contact the administrator."
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:491
+msgid "Become a Node"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:407
+msgid "Become a PrintPrice OS Node"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:302
+#: includes/class-ppp-bpe-cart.php:359
+#: templates/calculator-placeholder.php:71
+msgid "Binding"
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:82
+#: includes/class-ppp-bpe-calculator.php:86
+#: includes/class-ppp-bpe-calculator.php:228
+#: includes/class-ppp-bpe-calculator.php:229
+msgid "Black & White"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:663
+msgid "Bleed Area"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:336
+#: includes/class-ppp-bpe-preflight.php:387
+#: includes/class-ppp-bpe-preflight.php:640
+#: includes/class-ppp-bpe-production-queue.php:316
+msgid "Blocked"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:354
+#: templates/calculator-placeholder.php:24
+msgid "Book Size"
+msgstr ""
+
+#: templates/calculator-placeholder.php:21
+msgid "Book Specifications"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:370
+msgid "Book Specs"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:130
+msgid "Book added to cart."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:490
+msgid "Both interior and cover files are required for preflight."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:459
+msgid "CP Order ID"
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:187
+#: templates/calculator-placeholder.php:104
+msgid "Calculate Price"
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:186
+#: templates/calculator-placeholder.php:111
+msgid "Calculating…"
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:813
+msgid "Cancelled by Control Plane. %s"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:330
+msgid "Change production status to \"%s\"?"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:424
+msgid "Check"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:333
+#: includes/class-ppp-bpe-preflight.php:384
+msgid "Checking…"
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:83
+#: includes/class-ppp-bpe-calculator.php:87
+#: includes/class-ppp-bpe-calculator.php:228
+#: includes/class-ppp-bpe-calculator.php:229
+msgid "Color"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:665
+msgid "Color Space"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:97
+msgid "Coming Soon"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:112
+#: includes/class-ppp-bpe-production-queue.php:323
+msgid "Completed"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:435
+msgid "Configure Node Settings"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:353
+msgid "Connected to PrintPrice OS"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:253
+#: includes/class-ppp-bpe-control-plane.php:453
+msgid "Control Plane"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:131
+msgid "Control Plane / Node Settings"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:138
+msgid "Control Plane URL"
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:628
+msgid "Control Plane returned an error during file sync."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:858
+msgid "Control Plane returned an error."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:253
+msgid "Control Plane sync failed: %s"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:356
+#: templates/calculator-placeholder.php:38
+msgid "Copies"
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:131
+msgid "Copies must be between 1 and 10,000."
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:121
+msgid "Could not add item to cart."
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:195
+msgid "Could not add to cart. Please try again."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:848
+msgid "Could not connect to Control Plane."
+msgstr ""
+
+#: includes/class-ppp-bpe-api-client.php:108
+msgid "Could not connect to the BPE API."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:535
+msgid "Could not connect to the preflight service. Please try again later."
+msgstr ""
+
+#: includes/class-ppp-bpe-api-client.php:49
+msgid "Could not connect to the pricing service. Please try again later."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:494
+msgid "Could not create upload directory."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:734
+msgid "Could not read cover PDF."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:723
+msgid "Could not read interior PDF."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:595
+msgid "Could not read production files for sync."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:516
+msgid "Could not save uploaded file."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:344
+msgid "Could not start preflight check. Please try again."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:619
+msgid "Could not sync files to Control Plane."
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:361
+#: templates/calculator-placeholder.php:91
+msgid "Country"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:301
+msgid "Cover"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:358
+#: templates/calculator-placeholder.php:59
+msgid "Cover Color"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:408
+#: includes/class-ppp-bpe-file-upload.php:613
+#: includes/class-ppp-bpe-preflight.php:343
+#: includes/class-ppp-bpe-preflight.php:677
+msgid "Cover PDF"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:364
+msgid "Currency"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:224
+msgid "Current Plan"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:244
+msgid "Custom branding"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:98
+msgid "Custom pricing rules will be available in a future release. You will be able to configure paper costs, binding costs, margins, quantity breaks, and more."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:142
+#: includes/class-ppp-bpe-production-queue.php:369
+msgid "Customer"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:570
+msgid "Customer #%d"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:168
+msgid "Deactivate License"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:185
+msgid "Debug Mode"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:107
+msgid "Default Country"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:99
+msgid "Default Currency"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:374
+msgid "Disabled"
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:464
+msgid "Dispatch ID"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:401
+#: includes/class-ppp-bpe-file-upload.php:414
+msgid "Download"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:614
+msgid "Drag & drop or click to select"
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:501
+msgid "Enable Marketplace"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:161
+msgid "Enable Preflight"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:492
+msgid "Enable debug logging"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:410
+msgid "Enable preflight file validation"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:372
+msgid "Enabled"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:174
+msgid "Enter license key…"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:172
+msgid "Enter your PrintPricePro license key to activate Pro features. You are currently on the Free plan."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:426
+msgid "Enter your credentials in %s and set mode to \"Federated Node\"."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:345
+msgid "Error"
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:196
+msgid "Estimated price (service temporarily unavailable)"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:152
+msgid "Expires"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:415
+msgid "Expose production capacity to the federated network."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:332
+msgid "Failed to update status."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:366
+#: includes/class-ppp-bpe-settings.php:279
+msgid "Federated Node"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:387
+#: includes/class-ppp-bpe-preflight.php:423
+msgid "File"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:392
+msgid "File Dispatch"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:630
+msgid "File exceeds maximum size of %s."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:480
+msgid "File exceeds the maximum upload size of %s."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:452
+msgid "File upload failed."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:388
+msgid "Filename"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:371
+msgid "Files"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:359
+#: includes/class-ppp-bpe-file-upload.php:635
+msgid "Files Rejected"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:357
+#: includes/class-ppp-bpe-file-upload.php:633
+msgid "Files Required"
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:473
+msgid "Files Synced"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:358
+#: includes/class-ppp-bpe-file-upload.php:634
+msgid "Files Uploaded"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:150
+msgid "Files must be uploaded before starting preflight."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:625
+msgid "Files uploaded successfully!"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:666
+msgid "Font Embedding"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:52
+msgid "General Settings"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:418
+msgid "How to connect"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:367
+msgid "ISO 3166-1 alpha-2 country code (e.g., ES, DE, US)."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:352
+msgid "ISO 4217 currency code (e.g., EUR, USD, GBP)."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:664
+msgid "Image Resolution"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:110
+msgid "In Prepress"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:111
+msgid "In Production"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:347
+msgid "Info"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:672
+msgid "Ink Coverage"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:300
+msgid "Interior"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:357
+#: templates/calculator-placeholder.php:47
+msgid "Interior Color"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:395
+#: includes/class-ppp-bpe-file-upload.php:612
+#: includes/class-ppp-bpe-preflight.php:342
+#: includes/class-ppp-bpe-preflight.php:676
+msgid "Interior PDF"
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:146
+msgid "Invalid binding type."
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:119
+msgid "Invalid book size."
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:141
+msgid "Invalid cover color mode."
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:136
+msgid "Invalid interior color mode."
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:86
+msgid "Invalid offer data."
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:175
+msgid "Invalid paper type."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:555
+msgid "Invalid response from preflight service."
+msgstr ""
+
+#: includes/class-ppp-bpe-api-client.php:75
+msgid "Invalid response from the pricing service."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:413
+msgid "Job ID:"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:76
+#: includes/class-ppp-bpe-admin.php:77
+#: includes/class-ppp-bpe-admin.php:348
+msgid "Join PrintPrice OS"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:157
+msgid "Key"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:67
+#: includes/class-ppp-bpe-admin.php:68
+msgid "License"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:118
+msgid "License & Plan"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:122
+msgid "License Activation"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:75
+msgid "License Key"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:304
+msgid "License activated! Reloading…"
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:196
+msgid "License activation failed."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:130
+msgid "License status: %s"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:273
+msgid "Local"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:283
+msgid "Local: standalone calculator. API: connect to BPE service. Federated Node: full PrintPrice OS integration."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:381
+msgid "Manage Settings"
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:490
+msgid "Manage production queue, sync orders, and receive marketplace requests. Connect to PrintPrice OS."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:256
+#: includes/class-ppp-bpe-admin.php:396
+msgid "Marketplace"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:115
+msgid "Max Upload Size (MB)"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:617
+msgid "Max file size: %s"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:383
+msgid "Maximum file size in megabytes for PDF uploads (1–500 MB). Ensure your server php.ini upload_max_filesize and post_max_size allow this."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:426
+msgid "Message"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:365
+#: includes/class-ppp-bpe-settings.php:59
+msgid "Mode"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:185
+msgid "Monthly Usage"
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:197
+msgid "Monthly quote limit reached. Please contact the site administrator."
+msgstr ""
+
+#: includes/class-ppp-bpe-rest.php:48
+msgid "Monthly quote limit reached. Please upgrade your plan for unlimited quotes."
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:467
+msgid "Monthly quote limit reached. Upgrade to Pro for unlimited quotes and API pricing."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:315
+msgid "Network error. Please try again."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:107
+msgid "New"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:362
+msgid "No print orders found."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:563
+msgid "No production files to sync."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:146
+msgid "Node API Key"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:357
+#: includes/class-ppp-bpe-settings.php:91
+msgid "Node ID"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:337
+msgid "Node identifier assigned by PrintPrice OS. Required for Federated Node mode."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:294
+#: includes/class-ppp-bpe-control-plane.php:332
+msgid "Node mode is not enabled."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:478
+msgid "Not synced"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:404
+#: includes/class-ppp-bpe-file-upload.php:417
+msgid "Not uploaded"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:93
+msgid "Offer signature verification failed. Please recalculate your price."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:322
+msgid "On Hold"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:462
+#: includes/class-ppp-bpe-file-upload.php:470
+#: includes/class-ppp-bpe-file-upload.php:627
+msgid "Only PDF files are accepted."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:368
+msgid "Order"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:388
+msgid "Order Sync"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:137
+msgid "Order created."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:165
+msgid "Order is already in that status."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:302
+#: includes/class-ppp-bpe-control-plane.php:340
+#: includes/class-ppp-bpe-file-upload.php:157
+#: includes/class-ppp-bpe-file-upload.php:261
+#: includes/class-ppp-bpe-preflight.php:142
+#: includes/class-ppp-bpe-preflight.php:201
+#: includes/class-ppp-bpe-production-queue.php:149
+msgid "Order not found."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:491
+msgid "Order not yet synced to Control Plane."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:739
+msgid "Order received from PrintPrice OS marketplace (dispatch: %s)."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:260
+msgid "Order synced to Control Plane."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:389
+msgid "Orders are automatically synced to the Control Plane when created."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:669
+msgid "Overprint Settings"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:670
+msgid "PDF Version"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:620
+msgid "PDF files only"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:247
+msgid "PDF upload"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:147
+msgid "PDF upload requires a Pro plan or higher."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:661
+msgid "Page Count"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:662
+msgid "Page Size"
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:126
+msgid "Page count must be even."
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:355
+#: templates/calculator-placeholder.php:33
+msgid "Pages"
+msgstr ""
+
+#: includes/class-ppp-bpe-calculator.php:124
+msgid "Pages must be between 8 and 1000."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:321
+msgid "Paid"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:360
+#: templates/calculator-placeholder.php:80
+msgid "Paper"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:334
+#: includes/class-ppp-bpe-preflight.php:385
+#: includes/class-ppp-bpe-preflight.php:638
+#: includes/class-ppp-bpe-production-queue.php:314
+msgid "Passed"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:335
+#: includes/class-ppp-bpe-preflight.php:386
+#: includes/class-ppp-bpe-preflight.php:639
+msgid "Passed with Warnings"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:373
+msgid "Payment"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:313
+#: includes/class-ppp-bpe-production-queue.php:320
+msgid "Pending"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:137
+msgid "Plan"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:215
+msgid "Plans"
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:163
+msgid "Please enter a license key."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:611
+msgid "Please upload your Interior PDF and Cover PDF to proceed with production."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:250
+#: includes/class-ppp-bpe-admin.php:369
+#: includes/class-ppp-bpe-production-queue.php:372
+msgid "Preflight"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:169
+msgid "Preflight API URL"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:480
+msgid "Preflight API URL is not configured."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:363
+msgid "Preflight Blocked"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:328
+#: includes/class-ppp-bpe-preflight.php:372
+#: includes/class-ppp-bpe-preflight.php:398
+msgid "Preflight Check"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:360
+msgid "Preflight Checking…"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:361
+msgid "Preflight Passed"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:341
+msgid "Preflight Report"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:154
+msgid "Preflight Settings"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:362
+msgid "Preflight Warnings"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:646
+msgid "Preflight check completed: %s"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:637
+msgid "Preflight check has been started automatically."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:160
+msgid "Preflight check is already in progress."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:295
+msgid "Preflight check started automatically after file upload."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:182
+msgid "Preflight check started."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:189
+msgid "Preflight check started. Results will appear shortly."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:132
+msgid "Preflight is not enabled."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:373
+msgid "Preflight not yet started for this order."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:125
+msgid "Preflight requires a Preflight Add-on plan or higher."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:545
+msgid "Preflight service returned an error."
+msgstr ""
+
+#: templates/calculator-placeholder.php:117
+msgid "Price Estimate"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:49
+#: includes/class-ppp-bpe-admin.php:50
+#: includes/class-ppp-bpe-admin.php:95
+msgid "Pricing Rules"
+msgstr ""
+
+#: templates/calculator-placeholder.php:44
+msgid "Print Options"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:324
+msgid "PrintPrice OS tenant identifier. Required for Federated Node mode."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:29
+#: includes/class-ppp-bpe-admin.php:30
+msgid "PrintPricePro"
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:124
+msgid "PrintPricePro BPE for WooCommerce requires WooCommerce %s or later. Please install and activate WooCommerce."
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:307
+msgid "PrintPricePro Price Breakdown"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:374
+msgid "Production"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:377
+msgid "Production Files"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:58
+#: includes/class-ppp-bpe-admin.php:59
+#: includes/class-ppp-bpe-production-queue.php:345
+msgid "Production Queue"
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:484
+#: includes/class-ppp-bpe-production-queue.php:490
+msgid "Production Status"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:400
+msgid "Production Tracking"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:393
+msgid "Production files are synced securely to the federated network."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:635
+msgid "Production files synced to Control Plane."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:227
+msgid "Production files uploaded: %s"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:176
+msgid "Production status changed from \"%1$s\" to \"%2$s\"."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:782
+msgid "Production status updated from Control Plane: %s"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:401
+msgid "Production status updates flow between your shop and the OS."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:332
+msgid "Re-run Preflight"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:397
+msgid "Receive dispatch packages from the PrintPrice marketplace."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:412
+msgid "Receive orders from the PrintPrice marketplace."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:421
+msgid "Receive your Tenant ID, Node ID, and API Key."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:308
+msgid "Rejected"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:624
+msgid "Replace"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:420
+msgid "Request a node license from PrintPrice OS."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:306
+msgid "Required"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:413
+msgid "Requires API or Federated Node mode. Sends uploaded PDFs to the Preflight service for QA checks before production."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:108
+msgid "Reviewing"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:330
+msgid "Run Preflight Check"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:414
+msgid "Secure file dispatch and production tracking."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:40
+#: includes/class-ppp-bpe-admin.php:41
+#: includes/class-ppp-bpe-admin.php:427
+msgid "Settings"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:303
+msgid "Setup"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:425
+msgid "Severity"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:397
+msgid "Shared secret for verifying incoming webhook signatures (HMAC-SHA256). Used by Preflight and Control Plane callbacks."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:113
+msgid "Shipped"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:389
+msgid "Size"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:668
+msgid "Spine Width"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:407
+msgid "Started:"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:331
+msgid "Starting…"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:331
+msgid "Status updated."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:379
+#: includes/class-ppp-bpe-preflight.php:400
+msgid "Status:"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:411
+msgid "Sync orders automatically with the Control Plane."
+msgstr ""
+
+#: includes/class-ppp-bpe-control-plane.php:469
+msgid "Synced At"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:361
+#: includes/class-ppp-bpe-settings.php:83
+msgid "Tenant ID"
+msgstr ""
+
+#: includes/class-ppp-bpe-api-client.php:60
+msgid "The pricing service returned an error. Please try again later."
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:495
+msgid "There is an issue with your order. Please check your order notes or contact us."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:451
+msgid "These settings are required for Federated Node mode. They connect your print house to the PrintPrice OS Control Plane for order sync, file dispatch, and production tracking."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:164
+#: includes/class-ppp-bpe-production-queue.php:156
+msgid "This order does not contain PrintPricePro items."
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:363
+#: includes/class-ppp-bpe-plugin.php:190
+msgid "Total"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:667
+msgid "Transparency"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:671
+msgid "Trim Box"
+msgstr ""
+
+#: includes/class-ppp-bpe-cart.php:206
+#: includes/class-ppp-bpe-cart.php:362
+msgid "Unit Price"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:229
+msgid "Unlimited quotes"
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:468
+msgid "Upgrade Now"
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:267
+msgid "Upgrade Suggestions"
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:459
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:621
+msgid "Upload Files"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:610
+msgid "Upload Production Files"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:626
+msgid "Upload failed. Please try again."
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:623
+#: includes/class-ppp-bpe-production-queue.php:307
+msgid "Uploaded"
+msgstr ""
+
+#: includes/class-ppp-bpe-file-upload.php:622
+msgid "Uploading…"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:329
+msgid "Validate your production files before printing to catch errors early."
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:194
+msgid "View Cart"
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:346
+msgid "Warning"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:315
+msgid "Warnings"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:123
+msgid "Webhook Secret"
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:443
+msgid "When enabled, preflight starts immediately after the customer uploads both Interior and Cover PDFs. Otherwise, preflight must be triggered manually."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:495
+msgid "Writes diagnostic information to the WooCommerce log."
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:455
+msgid "You have used %1$d of %2$d free quotes this month. Upgrade to Pro for unlimited quotes."
+msgstr ""
+
+#: includes/class-ppp-bpe-settings.php:311
+msgid "Your PrintPricePro license key. Never exposed to the frontend."
+msgstr ""
+
+#: includes/class-ppp-bpe-admin.php:408
+msgid "Your calculator is already working. Take the next step and connect to the PrintPrice federated network."
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:478
+msgid "Your customers are uploading PDFs. Activate Preflight to detect file errors before production."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:337
+msgid "Your files are being checked. This usually takes a few moments."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:340
+msgid "Your files have issues that must be fixed before production. Please upload corrected files and run preflight again."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:338
+msgid "Your files passed all checks and are ready for production."
+msgstr ""
+
+#: includes/class-ppp-bpe-preflight.php:339
+msgid "Your files passed but have some warnings. Production can proceed, but you may want to review."
+msgstr ""
+
+#: includes/class-ppp-bpe-license.php:500
+msgid "Your print house can receive external orders from the PrintPrice federated network. Activate Marketplace Node."
+msgstr ""
+
+#: includes/class-ppp-bpe-plugin.php:189
+msgid "per copy"
+msgstr ""
+
+#: includes/class-ppp-bpe-production-queue.php:305
+#: includes/class-ppp-bpe-production-queue.php:312
+#: includes/class-ppp-bpe-production-queue.php:410
+msgid "—"
+msgstr ""

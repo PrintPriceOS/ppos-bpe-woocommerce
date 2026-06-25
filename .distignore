@@ -1,0 +1,29 @@
+# Files and directories to exclude from the distribution ZIP.
+# Used by wp dist-archive or similar tools.
+
+/.git
+/.github
+/.gitignore
+/.distignore
+/.claude
+
+/assets/README.md
+/assets/*.svg
+/assets/screenshots
+
+/docs
+/node_modules
+/vendor
+
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpcs.xml.dist
+phpunit.xml.dist
+
+CLAUDE.md
+PrintPricePro BPE WooCommerce Plugin.md
+
+*.zip
+*.tar.gz

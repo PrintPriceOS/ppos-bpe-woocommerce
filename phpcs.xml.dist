@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<ruleset name="PrintPricePro BPE for WooCommerce">
+	<description>WordPress coding standards for PrintPricePro BPE plugin.</description>
+
+	<!-- Scan these files -->
+	<file>.</file>
+
+	<!-- Exclude non-plugin files -->
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/build/*</exclude-pattern>
+	<exclude-pattern>/dist/*</exclude-pattern>
+	<exclude-pattern>/assets/*</exclude-pattern>
+	<exclude-pattern>/docs/*</exclude-pattern>
+	<exclude-pattern>/.git/*</exclude-pattern>
+
+	<!-- Only check PHP files -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Show progress and sniff codes -->
+	<arg value="ps"/>
+
+	<!-- Use colors -->
+	<arg name="colors"/>
+
+	<!-- WordPress-Extra includes WordPress-Core and adds more rules -->
+	<rule ref="WordPress-Extra">
+		<!-- Allow short array syntax -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+	</rule>
+
+	<!-- WordPress VIP-compatible rules (optional, recommended for quality) -->
+	<rule ref="WordPress.Security.EscapeOutput"/>
+	<rule ref="WordPress.Security.NonceVerification"/>
+	<rule ref="WordPress.Security.ValidatedSanitizedInput"/>
+
+	<!-- Set text domain -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="printpricepro-bpe"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Set minimum supported PHP version -->
+	<config name="minimum_php_version" value="8.1"/>
+
+	<!-- Set minimum supported WP version -->
+	<config name="minimum_wp_version" value="6.0"/>
+
+	<!-- Allow union types and other PHP 8.1 features -->
+	<rule ref="WordPress.NamingConventions.ValidFunctionName">
+		<properties>
+			<property name="additional_prefixes" type="array">
+				<element value="ppp_bpe"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Allow class file naming as per project convention -->
+	<rule ref="WordPress.Files.FileName">
+		<properties>
+			<property name="strict_class_file_names" value="false"/>
+		</properties>
+	</rule>
+</ruleset>
