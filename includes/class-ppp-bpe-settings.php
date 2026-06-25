@@ -13,14 +13,15 @@ class PPP_BPE_Settings {
 	public const OPTION_NAME  = 'ppp_bpe_options';
 
 	private const DEFAULTS = array(
-		'mode'             => 'local',
-		'bpe_api_url'      => '',
-		'license_key'      => '',
-		'tenant_id'        => '',
-		'node_id'          => '',
-		'default_currency' => 'EUR',
-		'default_country'  => 'ES',
-		'debug_mode'       => false,
+		'mode'                => 'local',
+		'bpe_api_url'         => '',
+		'license_key'         => '',
+		'tenant_id'           => '',
+		'node_id'             => '',
+		'default_currency'    => 'EUR',
+		'default_country'     => 'ES',
+		'max_upload_size_mb'  => 100,
+		'debug_mode'          => false,
 	);
 
 	private const VALID_MODES = array( 'local', 'api', 'federated_node' );
@@ -104,6 +105,14 @@ class PPP_BPE_Settings {
 		);
 
 		add_settings_field(
+			'ppp_bpe_max_upload_size',
+			__( 'Max Upload Size (MB)', 'printpricepro-bpe' ),
+			array( $this, 'render_max_upload_size_field' ),
+			'printpricepro-bpe',
+			'ppp_bpe_general'
+		);
+
+		add_settings_field(
 			'ppp_bpe_debug',
 			__( 'Debug Mode', 'printpricepro-bpe' ),
 			array( $this, 'render_debug_field' ),
@@ -142,6 +151,10 @@ class PPP_BPE_Settings {
 		$sanitized['default_country'] = isset( $input['default_country'] )
 			? strtoupper( substr( sanitize_text_field( $input['default_country'] ), 0, 2 ) )
 			: 'ES';
+
+		$sanitized['max_upload_size_mb'] = isset( $input['max_upload_size_mb'] )
+			? max( 1, min( 500, absint( $input['max_upload_size_mb'] ) ) )
+			: 100;
 
 		$sanitized['debug_mode'] = ! empty( $input['debug_mode'] );
 
@@ -264,6 +277,22 @@ class PPP_BPE_Settings {
 			placeholder="ES" />
 		<p class="description">
 			<?php esc_html_e( 'ISO 3166-1 alpha-2 country code (e.g., ES, DE, US).', 'printpricepro-bpe' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_max_upload_size_field(): void {
+		$options = $this->get_all_options();
+		?>
+		<input type="number"
+			name="<?php echo esc_attr( self::OPTION_NAME ); ?>[max_upload_size_mb]"
+			value="<?php echo esc_attr( $options['max_upload_size_mb'] ); ?>"
+			class="small-text"
+			min="1"
+			max="500"
+			step="1" />
+		<p class="description">
+			<?php esc_html_e( 'Maximum file size in megabytes for PDF uploads (1–500 MB). Ensure your server php.ini upload_max_filesize and post_max_size allow this.', 'printpricepro-bpe' ); ?>
 		</p>
 		<?php
 	}

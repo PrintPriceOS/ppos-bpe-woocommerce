@@ -1,0 +1,212 @@
+/* PrintPricePro BPE — File Upload Styles */
+
+.ppp-bpe-upload {
+	--ppp-accent: #2563eb;
+	--ppp-accent-hover: #1d4ed8;
+	--ppp-border: #d1d5db;
+	--ppp-bg-muted: #f8fafc;
+	--ppp-text: #1f2937;
+	--ppp-text-muted: #6b7280;
+	--ppp-error: #dc2626;
+	--ppp-error-bg: #fef2f2;
+	--ppp-success: #16a34a;
+	--ppp-success-bg: #f0fdf4;
+	--ppp-warning: #d97706;
+	--ppp-warning-bg: #fffbeb;
+	--ppp-radius: 6px;
+
+	max-width: 800px;
+	margin: 24px auto;
+	padding: 24px;
+	background: #fff;
+	border: 1px solid var(--ppp-border);
+	border-radius: 8px;
+	font-family: inherit;
+	color: var(--ppp-text);
+	line-height: 1.5;
+}
+
+.ppp-bpe-upload *,
+.ppp-bpe-upload *::before,
+.ppp-bpe-upload *::after {
+	box-sizing: border-box;
+}
+
+.ppp-bpe-upload__title {
+	font-size: 1.3em;
+	font-weight: 700;
+	margin: 0 0 8px 0;
+}
+
+.ppp-bpe-upload__description {
+	color: var(--ppp-text-muted);
+	margin: 0 0 16px 0;
+	font-size: 0.95em;
+}
+
+/* Status badge */
+.ppp-bpe-upload__status {
+	display: inline-block;
+	padding: 4px 12px;
+	border-radius: 20px;
+	font-size: 0.85em;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+.ppp-bpe-upload__status--required {
+	color: var(--ppp-warning);
+	background: var(--ppp-warning-bg);
+	border: 1px solid #fbbf24;
+}
+
+.ppp-bpe-upload__status--uploaded {
+	color: var(--ppp-success);
+	background: var(--ppp-success-bg);
+	border: 1px solid #86efac;
+}
+
+.ppp-bpe-upload__status--rejected {
+	color: var(--ppp-error);
+	background: var(--ppp-error-bg);
+	border: 1px solid #fca5a5;
+}
+
+/* Fields layout */
+.ppp-bpe-upload__fields {
+	display: grid;
+	gap: 20px;
+}
+
+@media (min-width: 600px) {
+	.ppp-bpe-upload__fields {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.ppp-bpe-upload__label {
+	display: block;
+	font-weight: 600;
+	font-size: 0.95em;
+	margin-bottom: 8px;
+}
+
+/* Dropzone */
+.ppp-bpe-upload__dropzone {
+	position: relative;
+	border: 2px dashed var(--ppp-border);
+	border-radius: var(--ppp-radius);
+	padding: 32px 16px;
+	text-align: center;
+	cursor: pointer;
+	transition: border-color 0.2s, background-color 0.2s;
+}
+
+.ppp-bpe-upload__dropzone:hover {
+	border-color: var(--ppp-accent);
+	background: rgba(37, 99, 235, 0.03);
+}
+
+.ppp-bpe-upload__dropzone--active {
+	border-color: var(--ppp-accent);
+	background: rgba(37, 99, 235, 0.06);
+}
+
+.ppp-bpe-upload__dropzone--has-file {
+	border-color: var(--ppp-success);
+	border-style: solid;
+	background: var(--ppp-success-bg);
+}
+
+.ppp-bpe-upload__dropzone-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+}
+
+.ppp-bpe-upload__dropzone-icon {
+	font-size: 2em;
+	line-height: 1;
+}
+
+.ppp-bpe-upload__dropzone-text {
+	font-weight: 500;
+	color: var(--ppp-text);
+	word-break: break-all;
+}
+
+.ppp-bpe-upload__dropzone-info {
+	font-size: 0.8em;
+	color: var(--ppp-text-muted);
+}
+
+.ppp-bpe-upload__input {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+/* File info */
+.ppp-bpe-upload__file-info {
+	margin-top: 8px;
+	font-size: 0.85em;
+	color: var(--ppp-success);
+	font-weight: 500;
+}
+
+/* Error / Success messages */
+.ppp-bpe-upload__error {
+	color: var(--ppp-error);
+	background: var(--ppp-error-bg);
+	padding: 12px 16px;
+	border-radius: var(--ppp-radius);
+	margin-top: 16px;
+	font-size: 0.95em;
+}
+
+.ppp-bpe-upload__success {
+	color: var(--ppp-success);
+	background: var(--ppp-success-bg);
+	padding: 12px 16px;
+	border-radius: var(--ppp-radius);
+	margin-top: 16px;
+	font-size: 0.95em;
+	border: 1px solid #86efac;
+}
+
+/* Submit button */
+.ppp-bpe-upload__submit {
+	display: block;
+	width: 100%;
+	padding: 12px 24px;
+	margin-top: 20px;
+	background: var(--ppp-accent);
+	color: #fff;
+	border: none;
+	border-radius: var(--ppp-radius);
+	font-size: 1em;
+	font-weight: 600;
+	font-family: inherit;
+	cursor: pointer;
+	transition: background-color 0.15s;
+}
+
+.ppp-bpe-upload__submit:hover {
+	background: var(--ppp-accent-hover);
+}
+
+.ppp-bpe-upload__submit:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+@media (min-width: 600px) {
+	.ppp-bpe-upload__submit {
+		width: auto;
+		min-width: 200px;
+	}
+}

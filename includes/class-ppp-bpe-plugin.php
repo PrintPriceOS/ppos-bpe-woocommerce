@@ -13,8 +13,9 @@ final class PPP_BPE_Plugin {
 
 	private ?PPP_BPE_Settings $settings   = null;
 	private ?PPP_BPE_Admin    $admin      = null;
-	private ?PPP_BPE_Rest     $rest       = null;
-	private ?PPP_BPE_Cart     $cart       = null;
+	private ?PPP_BPE_Rest        $rest        = null;
+	private ?PPP_BPE_Cart        $cart        = null;
+	private ?PPP_BPE_File_Upload $file_upload = null;
 
 	public static function instance(): self {
 		if ( null === self::$instance ) {
@@ -48,6 +49,9 @@ final class PPP_BPE_Plugin {
 		$this->cart = new PPP_BPE_Cart();
 		$this->cart->register_hooks();
 
+		$this->file_upload = new PPP_BPE_File_Upload();
+		$this->file_upload->register_hooks();
+
 		add_action( 'init', array( $this, 'register_shortcode' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_public_assets' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
@@ -64,6 +68,7 @@ final class PPP_BPE_Plugin {
 		require_once $includes . 'class-ppp-bpe-api-client.php';
 		require_once $includes . 'class-ppp-bpe-rest.php';
 		require_once $includes . 'class-ppp-bpe-cart.php';
+		require_once $includes . 'class-ppp-bpe-file-upload.php';
 	}
 
 	public static function activate(): void {
