@@ -177,11 +177,13 @@ class PPP_BPE_Control_Plane {
 	public function get_capacity( WP_REST_Request $request ): WP_REST_Response {
 		$options = self::get_options();
 
-		$active_orders = wc_get_orders( array(
-			'status' => array( 'wc-processing', 'wc-on-hold' ),
-			'limit'  => -1,
-			'return' => 'ids',
-		) );
+		$active_orders = wc_get_orders(
+			array(
+				'status' => array( 'wc-processing', 'wc-on-hold' ),
+				'limit'  => -1,
+				'return' => 'ids',
+			)
+		);
 
 		return new WP_REST_Response(
 			array(
@@ -204,7 +206,7 @@ class PPP_BPE_Control_Plane {
 	 * - order_cancelled: Cancel a dispatched order.
 	 */
 	public function handle_webhook( WP_REST_Request $request ): WP_REST_Response {
-		$body = $request->get_json_params();
+		$body  = $request->get_json_params();
 		$event = $body['event'] ?? '';
 
 		if ( empty( $event ) ) {
@@ -369,20 +371,26 @@ class PPP_BPE_Control_Plane {
 		$enabled = self::is_enabled();
 
 		$data = array(
-			'enabled'          => $enabled,
-			'mode'             => $options['mode'] ?? 'local',
-			'control_plane_url' => $options['control_plane_url'] ?? '',
-			'tenant_id'        => $options['tenant_id'] ?? '',
-			'node_id'          => $options['node_id'] ?? '',
-			'has_api_key'      => ! empty( $options['node_api_key'] ),
+			'enabled'            => $enabled,
+			'mode'               => $options['mode'] ?? 'local',
+			'control_plane_url'  => $options['control_plane_url'] ?? '',
+			'tenant_id'          => $options['tenant_id'] ?? '',
+			'node_id'            => $options['node_id'] ?? '',
+			'has_api_key'        => ! empty( $options['node_api_key'] ),
 			'has_webhook_secret' => ! empty( $options['webhook_secret'] ),
 		);
 
 		if ( $enabled ) {
-			$health = $this->check_control_plane_health();
+			$health             = $this->check_control_plane_health();
 			$data['connection'] = is_wp_error( $health )
-				? array( 'status' => 'error', 'message' => $health->get_error_message() )
-				: array( 'status' => 'connected', 'details' => $health );
+				? array(
+					'status'  => 'error',
+					'message' => $health->get_error_message(),
+				)
+				: array(
+					'status'  => 'connected',
+					'details' => $health,
+				);
 		}
 
 		return new WP_REST_Response( $data, 200 );
@@ -410,11 +418,13 @@ class PPP_BPE_Control_Plane {
 	}
 
 	public static function get_order_cp_id( WC_Order $order ): string {
-		return $order->get_meta( self::META_CP_ORDER_ID ) ?: '';
+		$value = $order->get_meta( self::META_CP_ORDER_ID );
+		return $value ? $value : '';
 	}
 
 	public static function get_order_production_status( WC_Order $order ): string {
-		return $order->get_meta( self::META_CP_PROD_STATUS ) ?: '';
+		$value = $order->get_meta( self::META_CP_PROD_STATUS );
+		return $value ? $value : '';
 	}
 
 	/**
@@ -468,7 +478,7 @@ class PPP_BPE_Control_Plane {
 						<?php endif; ?>
 						<tr>
 							<td><strong><?php esc_html_e( 'Synced At', 'printpricepro-bpe' ); ?></strong></td>
-							<td><?php echo esc_html( $synced_at ?: '—' ); ?></td>
+							<td><?php echo esc_html( $synced_at ? $synced_at : '—' ); ?></td>
 						</tr>
 						<tr>
 							<td><strong><?php esc_html_e( 'Files Synced', 'printpricepro-bpe' ); ?></strong></td>
@@ -501,7 +511,7 @@ class PPP_BPE_Control_Plane {
 		$options  = self::get_options();
 		$endpoint = $this->get_api_url( '/api/nodes/orders' );
 
-		$specs = $this->extract_order_specs( $order );
+		$specs   = $this->extract_order_specs( $order );
 		$payload = array(
 			'node_id'           => $options['node_id'],
 			'tenant_id'         => $options['tenant_id'],
@@ -635,7 +645,8 @@ class PPP_BPE_Control_Plane {
 
 		$order->add_order_note( __( 'Production files synced to Control Plane.', 'printpricepro-bpe' ) );
 
-		return json_decode( wp_remote_retrieve_body( $response ), true ) ?: array( 'synced' => true );
+		$decoded = json_decode( wp_remote_retrieve_body( $response ), true );
+		return $decoded ? $decoded : array( 'synced' => true );
 	}
 
 	private function push_status_update( WC_Order $order, string $cp_order_id, string $new_status ): array|WP_Error {
@@ -663,11 +674,13 @@ class PPP_BPE_Control_Plane {
 			);
 		}
 
-		$existing = wc_get_orders( array(
-			'meta_key'   => self::META_CP_DISPATCH_ID,
-			'meta_value' => $dispatch_id,
-			'limit'      => 1,
-		) );
+		$existing = wc_get_orders(
+			array(
+				'meta_key'   => self::META_CP_DISPATCH_ID,
+				'meta_value' => $dispatch_id,
+				'limit'      => 1,
+			)
+		);
 
 		if ( ! empty( $existing ) ) {
 			return new WP_REST_Response(
@@ -688,9 +701,11 @@ class PPP_BPE_Control_Plane {
 			);
 		}
 
-		$order = wc_create_order( array(
-			'status' => 'on-hold',
-		) );
+		$order = wc_create_order(
+			array(
+				'status' => 'on-hold',
+			)
+		);
 
 		if ( is_wp_error( $order ) ) {
 			$this->log( 'Failed to create order for dispatch ' . $dispatch_id . ': ' . $order->get_error_message() );
@@ -872,7 +887,7 @@ class PPP_BPE_Control_Plane {
 		);
 
 		if ( ! empty( $options['node_api_key'] ) ) {
-			$headers['Authorization']  = 'Bearer ' . $options['node_api_key'];
+			$headers['Authorization'] = 'Bearer ' . $options['node_api_key'];
 		}
 		if ( ! empty( $options['tenant_id'] ) ) {
 			$headers['X-PPP-Tenant-ID'] = $options['tenant_id'];
@@ -897,8 +912,8 @@ class PPP_BPE_Control_Plane {
 	// ──── Private: helpers ────
 
 	private function extract_order_specs( WC_Order $order ): array {
-		$specs            = array();
-		$base_product_id  = PPP_BPE_WooCommerce::get_base_product_id();
+		$specs           = array();
+		$base_product_id = PPP_BPE_WooCommerce::get_base_product_id();
 
 		foreach ( $order->get_items() as $item ) {
 			if ( ! $item instanceof WC_Order_Item_Product ) {
@@ -909,8 +924,14 @@ class PPP_BPE_Control_Plane {
 			}
 
 			$spec_fields = array(
-				'book_size', 'pages', 'copies', 'interior_color',
-				'cover_color', 'binding', 'paper', 'country',
+				'book_size',
+				'pages',
+				'copies',
+				'interior_color',
+				'cover_color',
+				'binding',
+				'paper',
+				'country',
 			);
 
 			foreach ( $spec_fields as $field ) {
@@ -926,11 +947,13 @@ class PPP_BPE_Control_Plane {
 	}
 
 	private function find_order_by_cp_id( string $cp_order_id ): ?WC_Order {
-		$orders = wc_get_orders( array(
-			'meta_key'   => self::META_CP_ORDER_ID,
-			'meta_value' => $cp_order_id,
-			'limit'      => 1,
-		) );
+		$orders = wc_get_orders(
+			array(
+				'meta_key'   => self::META_CP_ORDER_ID,
+				'meta_value' => $cp_order_id,
+				'limit'      => 1,
+			)
+		);
 
 		return ! empty( $orders ) ? $orders[0] : null;
 	}
@@ -963,14 +986,17 @@ class PPP_BPE_Control_Plane {
 
 	private static function get_options(): array {
 		$options = get_option( PPP_BPE_Settings::OPTION_NAME, array() );
-		return wp_parse_args( $options, array(
-			'mode'              => 'local',
-			'control_plane_url' => '',
-			'node_api_key'      => '',
-			'tenant_id'         => '',
-			'node_id'           => '',
-			'webhook_secret'    => '',
-		) );
+		return wp_parse_args(
+			$options,
+			array(
+				'mode'              => 'local',
+				'control_plane_url' => '',
+				'node_api_key'      => '',
+				'tenant_id'         => '',
+				'node_id'           => '',
+				'webhook_secret'    => '',
+			)
+		);
 	}
 
 	private function log( string $message ): void {

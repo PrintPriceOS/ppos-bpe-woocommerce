@@ -9,9 +9,9 @@ defined( 'ABSPATH' ) || exit;
 
 class PPP_BPE_Admin {
 
-	private PPP_BPE_Settings         $settings;
+	private PPP_BPE_Settings $settings;
 	private PPP_BPE_Production_Queue $production_queue;
-	private PPP_BPE_License          $license;
+	private PPP_BPE_License $license;
 	private array $page_hooks = array();
 
 	public function __construct( PPP_BPE_Settings $settings, PPP_BPE_Production_Queue $production_queue, PPP_BPE_License $license ) {
@@ -156,10 +156,12 @@ class PPP_BPE_Admin {
 						<tr>
 							<th><?php esc_html_e( 'Key', 'printpricepro-bpe' ); ?></th>
 							<td>
-								<code><?php
+								<code>
+								<?php
 									$key = $license_data['key'];
 									echo esc_html( substr( $key, 0, 4 ) . str_repeat( '*', max( 0, strlen( $key ) - 8 ) ) . substr( $key, -4 ) );
-								?></code>
+								?>
+								</code>
 							</td>
 						</tr>
 					</table>
@@ -193,7 +195,7 @@ class PPP_BPE_Admin {
 							printf(
 								/* translators: %d: number of quotes used */
 								esc_html__( '%d quotes this month (unlimited)', 'printpricepro-bpe' ),
-								$usage['used']
+								intval( $usage['used'] )
 							);
 							?>
 						<?php else : ?>
@@ -201,8 +203,8 @@ class PPP_BPE_Admin {
 							printf(
 								/* translators: 1: used quotes, 2: limit */
 								esc_html__( '%1$d of %2$d quotes used this month', 'printpricepro-bpe' ),
-								$usage['used'],
-								$usage['limit']
+								intval( $usage['used'] ),
+								intval( $usage['limit'] )
 							);
 							?>
 						<?php endif; ?>
@@ -214,10 +216,11 @@ class PPP_BPE_Admin {
 			<div class="ppp-bpe-license-card ppp-bpe-plans-card">
 				<h2><?php esc_html_e( 'Plans', 'printpricepro-bpe' ); ?></h2>
 				<div class="ppp-bpe-plans-grid">
-					<?php foreach ( $all_plans as $plan_key => $plan_name ) :
-						$features = PPP_BPE_License::get_plan_features( $plan_key );
+					<?php
+					foreach ( $all_plans as $plan_key => $plan_name ) :
+						$features   = PPP_BPE_License::get_plan_features( $plan_key );
 						$is_current = ( $plan_key === $plan );
-					?>
+						?>
 					<div class="ppp-bpe-plan-col <?php echo $is_current ? 'current' : ''; ?>">
 						<h3><?php echo esc_html( $plan_name ); ?></h3>
 						<?php if ( $is_current ) : ?>
@@ -232,7 +235,7 @@ class PPP_BPE_Admin {
 									printf(
 										/* translators: %d: number of quotes */
 										esc_html__( '%d quotes/month', 'printpricepro-bpe' ),
-										$features['monthly_quotes']
+										intval( $features['monthly_quotes'] )
 									);
 									?>
 								<?php endif; ?>
@@ -338,11 +341,11 @@ class PPP_BPE_Admin {
 	}
 
 	public function render_join_os_page(): void {
-		$options    = $this->settings->get_all_options();
-		$mode       = $options['mode'] ?? 'local';
-		$is_node    = PPP_BPE_Control_Plane::is_enabled();
-		$node_id    = $options['node_id'] ?? '';
-		$tenant_id  = $options['tenant_id'] ?? '';
+		$options   = $this->settings->get_all_options();
+		$mode      = $options['mode'] ?? 'local';
+		$is_node   = PPP_BPE_Control_Plane::is_enabled();
+		$node_id   = $options['node_id'] ?? '';
+		$tenant_id = $options['tenant_id'] ?? '';
 		?>
 		<div class="wrap ppp-bpe-admin-wrap">
 			<h1><?php esc_html_e( 'Join PrintPrice OS', 'printpricepro-bpe' ); ?></h1>

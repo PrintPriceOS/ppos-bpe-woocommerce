@@ -10,25 +10,72 @@ defined( 'ABSPATH' ) || exit;
 class PPP_BPE_Calculator {
 
 	private const BOOK_SIZES = array(
-		'A4'     => array( 'label' => 'A4 (210 × 297 mm)', 'width' => 210, 'height' => 297 ),
-		'A5'     => array( 'label' => 'A5 (148 × 210 mm)', 'width' => 148, 'height' => 210 ),
-		'letter' => array( 'label' => 'Letter (8.5 × 11 in)', 'width' => 216, 'height' => 279 ),
-		'digest' => array( 'label' => 'Digest (5.5 × 8.5 in)', 'width' => 140, 'height' => 216 ),
-		'pocket' => array( 'label' => 'Pocket (4.25 × 6.87 in)', 'width' => 108, 'height' => 175 ),
+		'A4'     => array(
+			'label'  => 'A4 (210 × 297 mm)',
+			'width'  => 210,
+			'height' => 297,
+		),
+		'A5'     => array(
+			'label'  => 'A5 (148 × 210 mm)',
+			'width'  => 148,
+			'height' => 210,
+		),
+		'letter' => array(
+			'label'  => 'Letter (8.5 × 11 in)',
+			'width'  => 216,
+			'height' => 279,
+		),
+		'digest' => array(
+			'label'  => 'Digest (5.5 × 8.5 in)',
+			'width'  => 140,
+			'height' => 216,
+		),
+		'pocket' => array(
+			'label'  => 'Pocket (4.25 × 6.87 in)',
+			'width'  => 108,
+			'height' => 175,
+		),
 	);
 
 	private const PAPER_TYPES = array(
-		'80gsm_offset'  => array( 'label' => '80 gsm Offset', 'cost_per_page' => 0.012 ),
-		'100gsm_offset' => array( 'label' => '100 gsm Offset', 'cost_per_page' => 0.018 ),
-		'115gsm_coated' => array( 'label' => '115 gsm Coated', 'cost_per_page' => 0.025 ),
-		'150gsm_coated' => array( 'label' => '150 gsm Coated', 'cost_per_page' => 0.035 ),
+		'80gsm_offset'  => array(
+			'label'         => '80 gsm Offset',
+			'cost_per_page' => 0.012,
+		),
+		'100gsm_offset' => array(
+			'label'         => '100 gsm Offset',
+			'cost_per_page' => 0.018,
+		),
+		'115gsm_coated' => array(
+			'label'         => '115 gsm Coated',
+			'cost_per_page' => 0.025,
+		),
+		'150gsm_coated' => array(
+			'label'         => '150 gsm Coated',
+			'cost_per_page' => 0.035,
+		),
 	);
 
 	private const BINDING_TYPES = array(
-		'perfect'      => array( 'label' => 'Perfect Binding', 'cost' => 2.50, 'min_pages' => 40 ),
-		'saddle_stitch' => array( 'label' => 'Saddle Stitch', 'cost' => 1.00, 'max_pages' => 80 ),
-		'hardcover'    => array( 'label' => 'Hardcover', 'cost' => 8.00, 'min_pages' => 40 ),
-		'spiral'       => array( 'label' => 'Spiral Binding', 'cost' => 3.00 ),
+		'perfect'       => array(
+			'label'     => 'Perfect Binding',
+			'cost'      => 2.50,
+			'min_pages' => 40,
+		),
+		'saddle_stitch' => array(
+			'label'     => 'Saddle Stitch',
+			'cost'      => 1.00,
+			'max_pages' => 80,
+		),
+		'hardcover'     => array(
+			'label'     => 'Hardcover',
+			'cost'      => 8.00,
+			'min_pages' => 40,
+		),
+		'spiral'        => array(
+			'label' => 'Spiral Binding',
+			'cost'  => 3.00,
+		),
 	);
 
 	private const COLOR_MULTIPLIERS = array(

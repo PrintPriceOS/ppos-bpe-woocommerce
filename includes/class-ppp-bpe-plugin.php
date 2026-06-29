@@ -11,15 +11,15 @@ final class PPP_BPE_Plugin {
 
 	private static ?self $instance = null;
 
-	private ?PPP_BPE_Settings $settings   = null;
-	private ?PPP_BPE_Admin    $admin      = null;
-	private ?PPP_BPE_Rest        $rest        = null;
-	private ?PPP_BPE_Cart        $cart        = null;
-	private ?PPP_BPE_File_Upload $file_upload = null;
-	private ?PPP_BPE_Preflight      $preflight      = null;
-	private ?PPP_BPE_Control_Plane    $control_plane    = null;
+	private ?PPP_BPE_Settings $settings                 = null;
+	private ?PPP_BPE_Admin $admin                       = null;
+	private ?PPP_BPE_Rest $rest                         = null;
+	private ?PPP_BPE_Cart $cart                         = null;
+	private ?PPP_BPE_File_Upload $file_upload           = null;
+	private ?PPP_BPE_Preflight $preflight               = null;
+	private ?PPP_BPE_Control_Plane $control_plane       = null;
 	private ?PPP_BPE_Production_Queue $production_queue = null;
-	private ?PPP_BPE_License          $license          = null;
+	private ?PPP_BPE_License $license                   = null;
 
 	public static function instance(): self {
 		if ( null === self::$instance ) {
@@ -173,30 +173,32 @@ final class PPP_BPE_Plugin {
 			$show_branding = ! $this->license->can_remove_branding();
 		}
 
-		$calc_data = wp_json_encode( array(
-			'restUrl'        => rest_url( PPP_BPE_Rest::NAMESPACE . '/calculate' ),
-			'addToCartUrl'   => rest_url( PPP_BPE_Rest::NAMESPACE . '/add-to-cart' ),
-			'nonce'          => wp_create_nonce( 'wp_rest' ),
-			'currency'       => $default_currency,
-			'mode'           => $options['mode'] ?? 'local',
-			'defaultCountry' => $default_country,
-			'defaultCopies'  => absint( $atts['default_copies'] ),
-			'showBranding'   => $show_branding,
-			'i18n'           => array(
-				'calculating'    => __( 'Calculating…', 'printpricepro-bpe' ),
-				'calculate'      => __( 'Calculate Price', 'printpricepro-bpe' ),
-				'errorGeneric'   => __( 'An error occurred. Please try again.', 'printpricepro-bpe' ),
-				'perCopy'        => __( 'per copy', 'printpricepro-bpe' ),
-				'total'          => __( 'Total', 'printpricepro-bpe' ),
-				'addToCart'      => __( 'Add to Cart', 'printpricepro-bpe' ),
-				'addingToCart'   => __( 'Adding…', 'printpricepro-bpe' ),
-				'addedToCart'    => __( 'Added to Cart!', 'printpricepro-bpe' ),
-				'viewCart'       => __( 'View Cart', 'printpricepro-bpe' ),
-				'cartError'      => __( 'Could not add to cart. Please try again.', 'printpricepro-bpe' ),
-				'fallbackNotice' => __( 'Estimated price (service temporarily unavailable)', 'printpricepro-bpe' ),
-				'limitReached'   => __( 'Monthly quote limit reached. Please contact the site administrator.', 'printpricepro-bpe' ),
-			),
-		) );
+		$calc_data = wp_json_encode(
+			array(
+				'restUrl'        => rest_url( PPP_BPE_Rest::NAMESPACE . '/calculate' ),
+				'addToCartUrl'   => rest_url( PPP_BPE_Rest::NAMESPACE . '/add-to-cart' ),
+				'nonce'          => wp_create_nonce( 'wp_rest' ),
+				'currency'       => $default_currency,
+				'mode'           => $options['mode'] ?? 'local',
+				'defaultCountry' => $default_country,
+				'defaultCopies'  => absint( $atts['default_copies'] ),
+				'showBranding'   => $show_branding,
+				'i18n'           => array(
+					'calculating'    => __( 'Calculating…', 'printpricepro-bpe' ),
+					'calculate'      => __( 'Calculate Price', 'printpricepro-bpe' ),
+					'errorGeneric'   => __( 'An error occurred. Please try again.', 'printpricepro-bpe' ),
+					'perCopy'        => __( 'per copy', 'printpricepro-bpe' ),
+					'total'          => __( 'Total', 'printpricepro-bpe' ),
+					'addToCart'      => __( 'Add to Cart', 'printpricepro-bpe' ),
+					'addingToCart'   => __( 'Adding…', 'printpricepro-bpe' ),
+					'addedToCart'    => __( 'Added to Cart!', 'printpricepro-bpe' ),
+					'viewCart'       => __( 'View Cart', 'printpricepro-bpe' ),
+					'cartError'      => __( 'Could not add to cart. Please try again.', 'printpricepro-bpe' ),
+					'fallbackNotice' => __( 'Estimated price (service temporarily unavailable)', 'printpricepro-bpe' ),
+					'limitReached'   => __( 'Monthly quote limit reached. Please contact the site administrator.', 'printpricepro-bpe' ),
+				),
+			)
+		);
 
 		wp_add_inline_script(
 			'ppp-bpe-public',

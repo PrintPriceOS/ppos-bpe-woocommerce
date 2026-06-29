@@ -112,7 +112,7 @@ class PPP_BPE_Preflight {
 			return false;
 		}
 
-		$body    = $request->get_body();
+		$body     = $request->get_body();
 		$expected = hash_hmac( 'sha256', $body, $secret );
 
 		return hash_equals( $expected, $signature );
@@ -229,7 +229,7 @@ class PPP_BPE_Preflight {
 		$data = array(
 			'status'     => $status,
 			'report'     => $report ? $this->humanize_report( $report ) : null,
-			'started_at' => $order->get_meta( self::META_PREFLIGHT_STARTED ) ?: null,
+			'started_at' => $order->get_meta( self::META_PREFLIGHT_STARTED ) ? $order->get_meta( self::META_PREFLIGHT_STARTED ) : null,
 		);
 
 		return new WP_REST_Response( $data, 200 );
@@ -313,40 +313,42 @@ class PPP_BPE_Preflight {
 
 		$this->enqueue_preflight_assets();
 
-		$status  = $order->get_meta( self::META_PREFLIGHT_STATUS );
-		$report  = $order->get_meta( self::META_PREFLIGHT_REPORT );
+		$status = $order->get_meta( self::META_PREFLIGHT_STATUS );
+		$report = $order->get_meta( self::META_PREFLIGHT_REPORT );
 
-		$preflight_data = wp_json_encode( array(
-			'orderId'       => $order_id,
-			'startUrl'      => rest_url( PPP_BPE_Rest::NAMESPACE . '/orders/' . $order_id . '/preflight/start' ),
-			'statusUrl'     => rest_url( PPP_BPE_Rest::NAMESPACE . '/orders/' . $order_id . '/preflight/status' ),
-			'nonce'         => wp_create_nonce( 'wp_rest' ),
-			'status'        => $status ?: 'none',
-			'report'        => $report ? $this->humanize_report( $report ) : null,
-			'pollInterval'  => 5000,
-			'i18n'          => array(
-				'title'                => __( 'Preflight Check', 'printpricepro-bpe' ),
-				'description'          => __( 'Validate your production files before printing to catch errors early.', 'printpricepro-bpe' ),
-				'startButton'          => __( 'Run Preflight Check', 'printpricepro-bpe' ),
-				'startingButton'       => __( 'Starting…', 'printpricepro-bpe' ),
-				'rerunButton'          => __( 'Re-run Preflight', 'printpricepro-bpe' ),
-				'statusPending'        => __( 'Checking…', 'printpricepro-bpe' ),
-				'statusPassed'         => __( 'Passed', 'printpricepro-bpe' ),
-				'statusWarnings'       => __( 'Passed with Warnings', 'printpricepro-bpe' ),
-				'statusBlocked'        => __( 'Blocked', 'printpricepro-bpe' ),
-				'messagePending'       => __( 'Your files are being checked. This usually takes a few moments.', 'printpricepro-bpe' ),
-				'messagePassed'        => __( 'Your files passed all checks and are ready for production.', 'printpricepro-bpe' ),
-				'messageWarnings'      => __( 'Your files passed but have some warnings. Production can proceed, but you may want to review.', 'printpricepro-bpe' ),
-				'messageBlocked'       => __( 'Your files have issues that must be fixed before production. Please upload corrected files and run preflight again.', 'printpricepro-bpe' ),
-				'reportTitle'          => __( 'Preflight Report', 'printpricepro-bpe' ),
-				'interiorFile'         => __( 'Interior PDF', 'printpricepro-bpe' ),
-				'coverFile'            => __( 'Cover PDF', 'printpricepro-bpe' ),
-				'errorGeneric'         => __( 'Could not start preflight check. Please try again.', 'printpricepro-bpe' ),
-				'severityError'        => __( 'Error', 'printpricepro-bpe' ),
-				'severityWarning'      => __( 'Warning', 'printpricepro-bpe' ),
-				'severityInfo'         => __( 'Info', 'printpricepro-bpe' ),
-			),
-		) );
+		$preflight_data = wp_json_encode(
+			array(
+				'orderId'      => $order_id,
+				'startUrl'     => rest_url( PPP_BPE_Rest::NAMESPACE . '/orders/' . $order_id . '/preflight/start' ),
+				'statusUrl'    => rest_url( PPP_BPE_Rest::NAMESPACE . '/orders/' . $order_id . '/preflight/status' ),
+				'nonce'        => wp_create_nonce( 'wp_rest' ),
+				'status'       => $status ? $status : 'none',
+				'report'       => $report ? $this->humanize_report( $report ) : null,
+				'pollInterval' => 5000,
+				'i18n'         => array(
+					'title'           => __( 'Preflight Check', 'printpricepro-bpe' ),
+					'description'     => __( 'Validate your production files before printing to catch errors early.', 'printpricepro-bpe' ),
+					'startButton'     => __( 'Run Preflight Check', 'printpricepro-bpe' ),
+					'startingButton'  => __( 'Starting…', 'printpricepro-bpe' ),
+					'rerunButton'     => __( 'Re-run Preflight', 'printpricepro-bpe' ),
+					'statusPending'   => __( 'Checking…', 'printpricepro-bpe' ),
+					'statusPassed'    => __( 'Passed', 'printpricepro-bpe' ),
+					'statusWarnings'  => __( 'Passed with Warnings', 'printpricepro-bpe' ),
+					'statusBlocked'   => __( 'Blocked', 'printpricepro-bpe' ),
+					'messagePending'  => __( 'Your files are being checked. This usually takes a few moments.', 'printpricepro-bpe' ),
+					'messagePassed'   => __( 'Your files passed all checks and are ready for production.', 'printpricepro-bpe' ),
+					'messageWarnings' => __( 'Your files passed but have some warnings. Production can proceed, but you may want to review.', 'printpricepro-bpe' ),
+					'messageBlocked'  => __( 'Your files have issues that must be fixed before production. Please upload corrected files and run preflight again.', 'printpricepro-bpe' ),
+					'reportTitle'     => __( 'Preflight Report', 'printpricepro-bpe' ),
+					'interiorFile'    => __( 'Interior PDF', 'printpricepro-bpe' ),
+					'coverFile'       => __( 'Cover PDF', 'printpricepro-bpe' ),
+					'errorGeneric'    => __( 'Could not start preflight check. Please try again.', 'printpricepro-bpe' ),
+					'severityError'   => __( 'Error', 'printpricepro-bpe' ),
+					'severityWarning' => __( 'Warning', 'printpricepro-bpe' ),
+					'severityInfo'    => __( 'Info', 'printpricepro-bpe' ),
+				),
+			)
+		);
 
 		wp_add_inline_script(
 			'ppp-bpe-preflight',
@@ -465,7 +467,8 @@ class PPP_BPE_Preflight {
 	}
 
 	public static function get_order_preflight_status( WC_Order $order ): string {
-		return $order->get_meta( self::META_PREFLIGHT_STATUS ) ?: 'none';
+		$value = $order->get_meta( self::META_PREFLIGHT_STATUS );
+		return $value ? $value : 'none';
 	}
 
 	private function send_to_preflight( WC_Order $order ): array|WP_Error {
@@ -624,9 +627,9 @@ class PPP_BPE_Preflight {
 		}
 
 		$report = array(
-			'status'     => $api_status,
-			'checks'     => $result['checks'] ?? array(),
-			'summary'    => $result['summary'] ?? '',
+			'status'      => $api_status,
+			'checks'      => $result['checks'] ?? array(),
+			'summary'     => $result['summary'] ?? '',
 			'received_at' => current_time( 'c' ),
 		);
 
@@ -658,18 +661,18 @@ class PPP_BPE_Preflight {
 		);
 
 		$check_labels = array(
-			'page_count'       => __( 'Page Count', 'printpricepro-bpe' ),
-			'page_size'        => __( 'Page Size', 'printpricepro-bpe' ),
-			'bleed'            => __( 'Bleed Area', 'printpricepro-bpe' ),
-			'resolution'       => __( 'Image Resolution', 'printpricepro-bpe' ),
-			'color_space'      => __( 'Color Space', 'printpricepro-bpe' ),
-			'fonts'            => __( 'Font Embedding', 'printpricepro-bpe' ),
-			'transparency'     => __( 'Transparency', 'printpricepro-bpe' ),
-			'spine_width'      => __( 'Spine Width', 'printpricepro-bpe' ),
-			'overprint'        => __( 'Overprint Settings', 'printpricepro-bpe' ),
-			'pdf_version'      => __( 'PDF Version', 'printpricepro-bpe' ),
-			'trim_box'         => __( 'Trim Box', 'printpricepro-bpe' ),
-			'ink_coverage'     => __( 'Ink Coverage', 'printpricepro-bpe' ),
+			'page_count'   => __( 'Page Count', 'printpricepro-bpe' ),
+			'page_size'    => __( 'Page Size', 'printpricepro-bpe' ),
+			'bleed'        => __( 'Bleed Area', 'printpricepro-bpe' ),
+			'resolution'   => __( 'Image Resolution', 'printpricepro-bpe' ),
+			'color_space'  => __( 'Color Space', 'printpricepro-bpe' ),
+			'fonts'        => __( 'Font Embedding', 'printpricepro-bpe' ),
+			'transparency' => __( 'Transparency', 'printpricepro-bpe' ),
+			'spine_width'  => __( 'Spine Width', 'printpricepro-bpe' ),
+			'overprint'    => __( 'Overprint Settings', 'printpricepro-bpe' ),
+			'pdf_version'  => __( 'PDF Version', 'printpricepro-bpe' ),
+			'trim_box'     => __( 'Trim Box', 'printpricepro-bpe' ),
+			'ink_coverage' => __( 'Ink Coverage', 'printpricepro-bpe' ),
 		);
 
 		$file_labels = array(
@@ -774,11 +777,13 @@ class PPP_BPE_Preflight {
 	}
 
 	private function find_order_by_job_id( string $job_id ): ?WC_Order {
-		$orders = wc_get_orders( array(
-			'meta_key'   => self::META_PREFLIGHT_JOB_ID,
-			'meta_value' => $job_id,
-			'limit'      => 1,
-		) );
+		$orders = wc_get_orders(
+			array(
+				'meta_key'   => self::META_PREFLIGHT_JOB_ID,
+				'meta_value' => $job_id,
+				'limit'      => 1,
+			)
+		);
 
 		return ! empty( $orders ) ? $orders[0] : null;
 	}

@@ -49,13 +49,28 @@
 	<!-- Set minimum supported WP version -->
 	<config name="minimum_wp_version" value="6.0"/>
 
-	<!-- Allow union types and other PHP 8.1 features -->
-	<rule ref="WordPress.NamingConventions.ValidFunctionName">
+	<!-- Recognize WooCommerce capabilities as valid -->
+	<rule ref="WordPress.WP.Capabilities">
 		<properties>
-			<property name="additional_prefixes" type="array">
-				<element value="ppp_bpe"/>
+			<property name="custom_capabilities" type="array">
+				<element value="manage_woocommerce"/>
 			</property>
 		</properties>
+	</rule>
+
+	<!-- Set allowed prefixes for global functions/classes/variables -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="ppp_bpe"/>
+				<element value="PPP_BPE"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Template files use local variables from include scope, not true globals -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound">
+		<exclude-pattern>/templates/*</exclude-pattern>
 	</rule>
 
 	<!-- Allow class file naming as per project convention -->

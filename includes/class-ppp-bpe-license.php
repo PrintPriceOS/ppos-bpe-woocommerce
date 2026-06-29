@@ -9,11 +9,11 @@ defined( 'ABSPATH' ) || exit;
 
 class PPP_BPE_License {
 
-	public const PLAN_FREE            = 'free';
-	public const PLAN_PRO             = 'pro_calculator';
-	public const PLAN_PREFLIGHT       = 'preflight_addon';
-	public const PLAN_CONNECTED_NODE  = 'connected_node';
-	public const PLAN_MARKETPLACE     = 'marketplace_node';
+	public const PLAN_FREE           = 'free';
+	public const PLAN_PRO            = 'pro_calculator';
+	public const PLAN_PREFLIGHT      = 'preflight_addon';
+	public const PLAN_CONNECTED_NODE = 'connected_node';
+	public const PLAN_MARKETPLACE    = 'marketplace_node';
 
 	public const OPTION_LICENSE_DATA = 'ppp_bpe_license_data';
 	public const OPTION_USAGE_DATA   = 'ppp_bpe_usage_data';
@@ -29,71 +29,71 @@ class PPP_BPE_License {
 	);
 
 	private const PLAN_HIERARCHY = array(
-		self::PLAN_FREE            => 0,
-		self::PLAN_PRO             => 1,
-		self::PLAN_PREFLIGHT       => 2,
-		self::PLAN_CONNECTED_NODE  => 3,
-		self::PLAN_MARKETPLACE     => 4,
+		self::PLAN_FREE           => 0,
+		self::PLAN_PRO            => 1,
+		self::PLAN_PREFLIGHT      => 2,
+		self::PLAN_CONNECTED_NODE => 3,
+		self::PLAN_MARKETPLACE    => 4,
 	);
 
 	private const PLAN_LABELS = array(
-		self::PLAN_FREE            => 'Free',
-		self::PLAN_PRO             => 'Pro Calculator',
-		self::PLAN_PREFLIGHT       => 'Preflight Add-on',
-		self::PLAN_CONNECTED_NODE  => 'Connected Node',
-		self::PLAN_MARKETPLACE     => 'Marketplace Node',
+		self::PLAN_FREE           => 'Free',
+		self::PLAN_PRO            => 'Pro Calculator',
+		self::PLAN_PREFLIGHT      => 'Preflight Add-on',
+		self::PLAN_CONNECTED_NODE => 'Connected Node',
+		self::PLAN_MARKETPLACE    => 'Marketplace Node',
 	);
 
 	private const PLAN_LIMITS = array(
-		self::PLAN_FREE => array(
-			'monthly_quotes'     => 50,
-			'api_pricing'        => false,
-			'custom_branding'    => false,
-			'pdf_upload'         => false,
-			'preflight'          => false,
-			'control_plane'      => false,
-			'marketplace'        => false,
-			'book_templates'     => 1,
+		self::PLAN_FREE           => array(
+			'monthly_quotes'  => 50,
+			'api_pricing'     => false,
+			'custom_branding' => false,
+			'pdf_upload'      => false,
+			'preflight'       => false,
+			'control_plane'   => false,
+			'marketplace'     => false,
+			'book_templates'  => 1,
 		),
-		self::PLAN_PRO => array(
-			'monthly_quotes'     => -1,
-			'api_pricing'        => true,
-			'custom_branding'    => true,
-			'pdf_upload'         => true,
-			'preflight'          => false,
-			'control_plane'      => false,
-			'marketplace'        => false,
-			'book_templates'     => -1,
+		self::PLAN_PRO            => array(
+			'monthly_quotes'  => -1,
+			'api_pricing'     => true,
+			'custom_branding' => true,
+			'pdf_upload'      => true,
+			'preflight'       => false,
+			'control_plane'   => false,
+			'marketplace'     => false,
+			'book_templates'  => -1,
 		),
-		self::PLAN_PREFLIGHT => array(
-			'monthly_quotes'     => -1,
-			'api_pricing'        => true,
-			'custom_branding'    => true,
-			'pdf_upload'         => true,
-			'preflight'          => true,
-			'control_plane'      => false,
-			'marketplace'        => false,
-			'book_templates'     => -1,
+		self::PLAN_PREFLIGHT      => array(
+			'monthly_quotes'  => -1,
+			'api_pricing'     => true,
+			'custom_branding' => true,
+			'pdf_upload'      => true,
+			'preflight'       => true,
+			'control_plane'   => false,
+			'marketplace'     => false,
+			'book_templates'  => -1,
 		),
 		self::PLAN_CONNECTED_NODE => array(
-			'monthly_quotes'     => -1,
-			'api_pricing'        => true,
-			'custom_branding'    => true,
-			'pdf_upload'         => true,
-			'preflight'          => true,
-			'control_plane'      => true,
-			'marketplace'        => false,
-			'book_templates'     => -1,
+			'monthly_quotes'  => -1,
+			'api_pricing'     => true,
+			'custom_branding' => true,
+			'pdf_upload'      => true,
+			'preflight'       => true,
+			'control_plane'   => true,
+			'marketplace'     => false,
+			'book_templates'  => -1,
 		),
-		self::PLAN_MARKETPLACE => array(
-			'monthly_quotes'     => -1,
-			'api_pricing'        => true,
-			'custom_branding'    => true,
-			'pdf_upload'         => true,
-			'preflight'          => true,
-			'control_plane'      => true,
-			'marketplace'        => true,
-			'book_templates'     => -1,
+		self::PLAN_MARKETPLACE    => array(
+			'monthly_quotes'  => -1,
+			'api_pricing'     => true,
+			'custom_branding' => true,
+			'pdf_upload'      => true,
+			'preflight'       => true,
+			'control_plane'   => true,
+			'marketplace'     => true,
+			'book_templates'  => -1,
 		),
 	);
 
@@ -163,9 +163,9 @@ class PPP_BPE_License {
 			return new WP_Error( 'empty_key', __( 'Please enter a license key.', 'printpricepro-bpe' ) );
 		}
 
-		$options     = get_option( PPP_BPE_Settings::OPTION_NAME, array() );
-		$api_url     = $options['bpe_api_url'] ?? '';
-		$site_url    = get_site_url();
+		$options  = get_option( PPP_BPE_Settings::OPTION_NAME, array() );
+		$api_url  = $options['bpe_api_url'] ?? '';
+		$site_url = get_site_url();
 
 		if ( '' === $api_url ) {
 			return $this->activate_offline( $license_key );
@@ -176,11 +176,13 @@ class PPP_BPE_License {
 			array(
 				'timeout' => 15,
 				'headers' => array( 'Content-Type' => 'application/json' ),
-				'body'    => wp_json_encode( array(
-					'license_key' => $license_key,
-					'site_url'    => $site_url,
-					'plugin_version' => PPP_BPE_VERSION,
-				) ),
+				'body'    => wp_json_encode(
+					array(
+						'license_key'    => $license_key,
+						'site_url'       => $site_url,
+						'plugin_version' => PPP_BPE_VERSION,
+					)
+				),
 			)
 		);
 
@@ -250,10 +252,12 @@ class PPP_BPE_License {
 				array(
 					'timeout' => 10,
 					'headers' => array( 'Content-Type' => 'application/json' ),
-					'body'    => wp_json_encode( array(
-						'license_key' => $license_data['key'],
-						'site_url'    => get_site_url(),
-					) ),
+					'body'    => wp_json_encode(
+						array(
+							'license_key' => $license_data['key'],
+							'site_url'    => get_site_url(),
+						)
+					),
 				)
 			);
 		}
@@ -282,10 +286,12 @@ class PPP_BPE_License {
 			array(
 				'timeout' => 15,
 				'headers' => array( 'Content-Type' => 'application/json' ),
-				'body'    => wp_json_encode( array(
-					'license_key' => $license_data['key'],
-					'site_url'    => get_site_url(),
-				) ),
+				'body'    => wp_json_encode(
+					array(
+						'license_key' => $license_data['key'],
+						'site_url'    => get_site_url(),
+					)
+				),
 			)
 		);
 
@@ -344,7 +350,7 @@ class PPP_BPE_License {
 	}
 
 	public function plan_at_least( string $minimum_plan ): bool {
-		$current_level = self::PLAN_HIERARCHY[ $this->get_plan() ] ?? 0;
+		$current_level  = self::PLAN_HIERARCHY[ $this->get_plan() ] ?? 0;
 		$required_level = self::PLAN_HIERARCHY[ $minimum_plan ] ?? 0;
 		return $current_level >= $required_level;
 	}
@@ -586,10 +592,13 @@ class PPP_BPE_License {
 	}
 
 	private function get_usage_data(): array {
-		return get_option( self::OPTION_USAGE_DATA, array(
-			'month'  => gmdate( 'Y-m' ),
-			'events' => array(),
-		) );
+		return get_option(
+			self::OPTION_USAGE_DATA,
+			array(
+				'month'  => gmdate( 'Y-m' ),
+				'events' => array(),
+			)
+		);
 	}
 
 	private function normalize_plan( string $plan ): string {

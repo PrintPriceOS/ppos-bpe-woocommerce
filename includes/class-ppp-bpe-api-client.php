@@ -34,11 +34,11 @@ class PPP_BPE_Api_Client {
 		$response = wp_remote_post(
 			$endpoint,
 			array(
-				'timeout'    => self::TIMEOUT_SECONDS,
+				'timeout'     => self::TIMEOUT_SECONDS,
 				'redirection' => 0,
-				'headers'    => $this->get_headers(),
-				'body'       => wp_json_encode( $specs ),
-				'sslverify'  => true,
+				'headers'     => $this->get_headers(),
+				'body'        => wp_json_encode( $specs ),
+				'sslverify'   => true,
 			)
 		);
 

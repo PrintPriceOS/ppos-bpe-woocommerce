@@ -65,7 +65,7 @@ class PPP_BPE_Rest {
 		if ( 200 === $response->get_status() && null !== $license ) {
 			$license->record_event( 'quote_calculated' );
 
-			$data = $response->get_data();
+			$data                  = $response->get_data();
 			$data['show_branding'] = ! $license->can_remove_branding();
 			$data['usage']         = $license->get_quote_usage_summary();
 			$response->set_data( $data );
@@ -127,8 +127,8 @@ class PPP_BPE_Rest {
 			}
 
 			$this->log( 'API call failed: ' . $result->get_error_message() . '. Falling back to local calculator.' );
-			$local_result = $this->calculate_local( $request );
-			$data         = $local_result->get_data();
+			$local_result   = $this->calculate_local( $request );
+			$data           = $local_result->get_data();
 			$data['source'] = 'local_fallback';
 			$local_result->set_data( $data );
 			return $local_result;
@@ -195,10 +195,10 @@ class PPP_BPE_Rest {
 			'mode'               => $mode,
 			'base_product_id'    => (int) get_option( PPP_BPE_WooCommerce::OPTION_PRODUCT_ID, 0 ),
 			'production_flags'   => array(
-				'os_connection'  => 'federated_node' === $mode,
-				'control_plane'  => PPP_BPE_Control_Plane::is_enabled(),
-				'preflight'      => PPP_BPE_Preflight::is_enabled(),
-				'marketplace'    => false,
+				'os_connection' => 'federated_node' === $mode,
+				'control_plane' => PPP_BPE_Control_Plane::is_enabled(),
+				'preflight'     => PPP_BPE_Preflight::is_enabled(),
+				'marketplace'   => false,
 			),
 			'license'            => array(
 				'plan'   => $this->get_license_plan(),
@@ -208,7 +208,7 @@ class PPP_BPE_Rest {
 		);
 
 		if ( 'api' === $mode || 'federated_node' === $mode ) {
-			$api_url = $options['bpe_api_url'] ?? '';
+			$api_url                = $options['bpe_api_url'] ?? '';
 			$data['api_configured'] = '' !== $api_url;
 		}
 

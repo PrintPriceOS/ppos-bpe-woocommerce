@@ -9,14 +9,14 @@ defined( 'ABSPATH' ) || exit;
 
 class PPP_BPE_Production_Queue {
 
-	public const STATUS_NEW              = 'new';
-	public const STATUS_REVIEWING        = 'reviewing';
-	public const STATUS_ACCEPTED         = 'accepted';
-	public const STATUS_IN_PREPRESS      = 'in_prepress';
-	public const STATUS_IN_PRODUCTION    = 'in_production';
-	public const STATUS_COMPLETED        = 'completed';
-	public const STATUS_SHIPPED          = 'shipped';
-	public const STATUS_ACTION_REQUIRED  = 'action_required';
+	public const STATUS_NEW             = 'new';
+	public const STATUS_REVIEWING       = 'reviewing';
+	public const STATUS_ACCEPTED        = 'accepted';
+	public const STATUS_IN_PREPRESS     = 'in_prepress';
+	public const STATUS_IN_PRODUCTION   = 'in_production';
+	public const STATUS_COMPLETED       = 'completed';
+	public const STATUS_SHIPPED         = 'shipped';
+	public const STATUS_ACTION_REQUIRED = 'action_required';
 
 	private const META_PRODUCTION_STATUS = '_ppp_bpe_production_status';
 	private const META_STATUS_HISTORY    = '_ppp_bpe_status_history';
@@ -159,7 +159,8 @@ class PPP_BPE_Production_Queue {
 			);
 		}
 
-		$old_status = $order->get_meta( self::META_PRODUCTION_STATUS ) ?: self::STATUS_NEW;
+		$old_status = $order->get_meta( self::META_PRODUCTION_STATUS );
+		$old_status = $old_status ? $old_status : self::STATUS_NEW;
 
 		if ( $old_status === $new_status ) {
 			return new WP_REST_Response(
@@ -243,8 +244,8 @@ class PPP_BPE_Production_Queue {
 			);
 		}
 
-		$all_orders    = wc_get_orders( $args );
-		$bpe_orders    = array();
+		$all_orders = wc_get_orders( $args );
+		$bpe_orders = array();
 
 		foreach ( $all_orders as $order ) {
 			if ( $this->order_has_bpe_items( $order ) ) {
@@ -256,12 +257,15 @@ class PPP_BPE_Production_Queue {
 	}
 
 	public function format_queue_item( WC_Order $order ): array {
-		$production_status = $order->get_meta( self::META_PRODUCTION_STATUS ) ?: self::STATUS_NEW;
-		$file_status       = $order->get_meta( '_ppp_bpe_file_status' ) ?: 'none';
-		$preflight_status  = $order->get_meta( '_ppp_bpe_preflight_status' ) ?: 'none';
+		$production_status = $order->get_meta( self::META_PRODUCTION_STATUS );
+		$production_status = $production_status ? $production_status : self::STATUS_NEW;
+		$file_status       = $order->get_meta( '_ppp_bpe_file_status' );
+		$file_status       = $file_status ? $file_status : 'none';
+		$preflight_status  = $order->get_meta( '_ppp_bpe_preflight_status' );
+		$preflight_status  = $preflight_status ? $preflight_status : 'none';
 		$labels            = self::get_status_labels();
 
-		$specs = array();
+		$specs           = array();
 		$base_product_id = PPP_BPE_WooCommerce::get_base_product_id();
 		foreach ( $order->get_items() as $item ) {
 			if ( $item instanceof WC_Order_Item_Product && $item->get_product_id() === $base_product_id ) {
@@ -298,15 +302,15 @@ class PPP_BPE_Production_Queue {
 		$filter_status = isset( $_GET['production_status'] ) ? sanitize_text_field( wp_unslash( $_GET['production_status'] ) ) : '';
 		$paged         = isset( $_GET['paged'] ) ? max( 1, absint( $_GET['paged'] ) ) : 1;
 		$per_page      = 20;
-		$orders        = $this->query_bpe_orders( $filter_status ?: null, $per_page, $paged );
+		$orders        = $this->query_bpe_orders( $filter_status ? $filter_status : null, $per_page, $paged );
 		$labels        = self::get_status_labels();
 		$colors        = self::get_status_colors();
 
 		$file_labels = array(
-			'none'            => __( '—', 'printpricepro-bpe' ),
-			'files_required'  => __( 'Required', 'printpricepro-bpe' ),
-			'files_uploaded'  => __( 'Uploaded', 'printpricepro-bpe' ),
-			'files_rejected'  => __( 'Rejected', 'printpricepro-bpe' ),
+			'none'           => __( '—', 'printpricepro-bpe' ),
+			'files_required' => __( 'Required', 'printpricepro-bpe' ),
+			'files_uploaded' => __( 'Uploaded', 'printpricepro-bpe' ),
+			'files_rejected' => __( 'Rejected', 'printpricepro-bpe' ),
 		);
 
 		$preflight_labels = array(
@@ -324,16 +328,19 @@ class PPP_BPE_Production_Queue {
 			'completed'  => __( 'Completed', 'printpricepro-bpe' ),
 		);
 
-		$queue_data = wp_json_encode( array(
-			'restUrl' => rest_url( PPP_BPE_Rest::NAMESPACE . '/queue' ),
-			'nonce'   => wp_create_nonce( 'wp_rest' ),
-			'i18n'    => array(
-				'confirmChange' => __( 'Change production status to "%s"?', 'printpricepro-bpe' ),
-				'updated'       => __( 'Status updated.', 'printpricepro-bpe' ),
-				'error'         => __( 'Failed to update status.', 'printpricepro-bpe' ),
-				'notePrompt'    => __( 'Add a note (optional):', 'printpricepro-bpe' ),
-			),
-		) );
+		$queue_data = wp_json_encode(
+			array(
+				'restUrl' => rest_url( PPP_BPE_Rest::NAMESPACE . '/queue' ),
+				'nonce'   => wp_create_nonce( 'wp_rest' ),
+				'i18n'    => array(
+					/* translators: %s: new production status name */
+					'confirmChange' => __( 'Change production status to "%s"?', 'printpricepro-bpe' ),
+					'updated'       => __( 'Status updated.', 'printpricepro-bpe' ),
+					'error'         => __( 'Failed to update status.', 'printpricepro-bpe' ),
+					'notePrompt'    => __( 'Add a note (optional):', 'printpricepro-bpe' ),
+				),
+			)
+		);
 
 		wp_add_inline_script(
 			'ppp-bpe-admin',
@@ -347,12 +354,12 @@ class PPP_BPE_Production_Queue {
 
 			<div class="ppp-bpe-queue-filters">
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=printpricepro-bpe-orders' ) ); ?>"
-				   class="ppp-bpe-filter-link <?php echo '' === $filter_status ? 'active' : ''; ?>">
+					class="ppp-bpe-filter-link <?php echo '' === $filter_status ? 'active' : ''; ?>">
 					<?php esc_html_e( 'All', 'printpricepro-bpe' ); ?>
 				</a>
 				<?php foreach ( $labels as $key => $label ) : ?>
 					<a href="<?php echo esc_url( add_query_arg( 'production_status', $key, admin_url( 'admin.php?page=printpricepro-bpe-orders' ) ) ); ?>"
-					   class="ppp-bpe-filter-link <?php echo $filter_status === $key ? 'active' : ''; ?>">
+						class="ppp-bpe-filter-link <?php echo $filter_status === $key ? 'active' : ''; ?>">
 						<?php echo esc_html( $label ); ?>
 					</a>
 				<?php endforeach; ?>
@@ -377,11 +384,12 @@ class PPP_BPE_Production_Queue {
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ( $orders as $order ) :
+						<?php
+						foreach ( $orders as $order ) :
 							$item              = $this->format_queue_item( $order );
 							$production_status = $item['production_status'];
 							$status_color      = $colors[ $production_status ] ?? '#6b7280';
-						?>
+							?>
 						<tr data-order-id="<?php echo esc_attr( $item['order_id'] ); ?>">
 							<td class="column-order">
 								<a href="<?php echo esc_url( $item['edit_url'] ); ?>">
@@ -396,14 +404,18 @@ class PPP_BPE_Production_Queue {
 							<td class="column-specs">
 								<?php if ( ! empty( $item['specs']['book_size'] ) ) : ?>
 									<span class="ppp-bpe-spec-tag"><?php echo esc_html( $item['specs']['book_size'] ); ?></span>
-									<span class="ppp-bpe-spec-tag"><?php
+									<span class="ppp-bpe-spec-tag">
+									<?php
 										/* translators: %s: number of pages */
 										echo esc_html( sprintf( __( '%s pp', 'printpricepro-bpe' ), $item['specs']['pages'] ) );
-									?></span>
-									<span class="ppp-bpe-spec-tag"><?php
+									?>
+									</span>
+									<span class="ppp-bpe-spec-tag">
+									<?php
 										/* translators: %s: number of copies */
 										echo esc_html( sprintf( __( '%s copies', 'printpricepro-bpe' ), $item['specs']['copies'] ) );
-									?></span>
+									?>
+									</span>
 									<?php if ( ! empty( $item['specs']['binding'] ) ) : ?>
 										<span class="ppp-bpe-spec-tag"><?php echo esc_html( $item['specs']['binding'] ); ?></span>
 									<?php endif; ?>
@@ -468,7 +480,8 @@ class PPP_BPE_Production_Queue {
 			PPP_BPE_VERSION
 		);
 
-		$production_status = $order->get_meta( self::META_PRODUCTION_STATUS ) ?: self::STATUS_NEW;
+		$production_status = $order->get_meta( self::META_PRODUCTION_STATUS );
+		$production_status = $production_status ? $production_status : self::STATUS_NEW;
 		$labels            = self::get_status_labels();
 		$colors            = self::get_status_colors();
 
@@ -498,11 +511,12 @@ class PPP_BPE_Production_Queue {
 			<?php endif; ?>
 
 			<div class="ppp-bpe-tracking-steps">
-				<?php foreach ( $steps as $i => $step ) :
+				<?php
+				foreach ( $steps as $i => $step ) :
 					$is_done    = $i < $current_index;
 					$is_current = $i === $current_index;
 					$step_class = $is_done ? 'done' : ( $is_current ? 'current' : 'pending' );
-				?>
+					?>
 					<div class="ppp-bpe-tracking-step <?php echo esc_attr( $step_class ); ?>">
 						<div class="ppp-bpe-tracking-dot"></div>
 						<span class="ppp-bpe-tracking-label"><?php echo esc_html( $labels[ $step ] ); ?></span>
@@ -551,10 +565,12 @@ class PPP_BPE_Production_Queue {
 					'Authorization' => 'Bearer ' . $api_key,
 					'Content-Type'  => 'application/json',
 				),
-				'body'    => wp_json_encode( array(
-					'status'    => $status,
-					'timestamp' => current_time( 'c' ),
-				) ),
+				'body'    => wp_json_encode(
+					array(
+						'status'    => $status,
+						'timestamp' => current_time( 'c' ),
+					)
+				),
 				'timeout' => 15,
 			)
 		);

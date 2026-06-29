@@ -247,7 +247,7 @@ class PPP_BPE_File_Upload {
 			array(
 				'uploaded'         => $results,
 				'status'           => $order->get_meta( self::META_FILE_STATUS ),
-				'preflight_status' => $preflight_status ?: null,
+				'preflight_status' => $preflight_status ? $preflight_status : null,
 			),
 			200
 		);
@@ -264,9 +264,9 @@ class PPP_BPE_File_Upload {
 			);
 		}
 
-		$status       = $order->get_meta( self::META_FILE_STATUS ) ?: self::STATUS_FILES_REQUIRED;
-		$interior     = $order->get_meta( self::META_INTERIOR_FILE );
-		$cover        = $order->get_meta( self::META_COVER_FILE );
+		$status   = ( $order->get_meta( self::META_FILE_STATUS ) ? $order->get_meta( self::META_FILE_STATUS ) : self::STATUS_FILES_REQUIRED );
+		$interior = $order->get_meta( self::META_INTERIOR_FILE );
+		$cover    = $order->get_meta( self::META_COVER_FILE );
 
 		$data = array(
 			'status'   => $status,
@@ -350,28 +350,28 @@ class PPP_BPE_File_Upload {
 			return;
 		}
 
-		$status   = $order->get_meta( self::META_FILE_STATUS ) ?: self::STATUS_FILES_REQUIRED;
+		$status   = ( $order->get_meta( self::META_FILE_STATUS ) ? $order->get_meta( self::META_FILE_STATUS ) : self::STATUS_FILES_REQUIRED );
 		$interior = $order->get_meta( self::META_INTERIOR_FILE );
 		$cover    = $order->get_meta( self::META_COVER_FILE );
 
 		$status_labels = array(
-			self::STATUS_FILES_REQUIRED         => __( 'Files Required', 'printpricepro-bpe' ),
-			self::STATUS_FILES_UPLOADED         => __( 'Files Uploaded', 'printpricepro-bpe' ),
-			self::STATUS_FILES_REJECTED         => __( 'Files Rejected', 'printpricepro-bpe' ),
-			PPP_BPE_Preflight::STATUS_PENDING   => __( 'Preflight Checking…', 'printpricepro-bpe' ),
-			PPP_BPE_Preflight::STATUS_PASSED    => __( 'Preflight Passed', 'printpricepro-bpe' ),
-			PPP_BPE_Preflight::STATUS_WARNINGS  => __( 'Preflight Warnings', 'printpricepro-bpe' ),
-			PPP_BPE_Preflight::STATUS_BLOCKED   => __( 'Preflight Blocked', 'printpricepro-bpe' ),
+			self::STATUS_FILES_REQUIRED        => __( 'Files Required', 'printpricepro-bpe' ),
+			self::STATUS_FILES_UPLOADED        => __( 'Files Uploaded', 'printpricepro-bpe' ),
+			self::STATUS_FILES_REJECTED        => __( 'Files Rejected', 'printpricepro-bpe' ),
+			PPP_BPE_Preflight::STATUS_PENDING  => __( 'Preflight Checking…', 'printpricepro-bpe' ),
+			PPP_BPE_Preflight::STATUS_PASSED   => __( 'Preflight Passed', 'printpricepro-bpe' ),
+			PPP_BPE_Preflight::STATUS_WARNINGS => __( 'Preflight Warnings', 'printpricepro-bpe' ),
+			PPP_BPE_Preflight::STATUS_BLOCKED  => __( 'Preflight Blocked', 'printpricepro-bpe' ),
 		);
 
 		$status_colors = array(
-			self::STATUS_FILES_REQUIRED         => '#d97706',
-			self::STATUS_FILES_UPLOADED         => '#16a34a',
-			self::STATUS_FILES_REJECTED         => '#dc2626',
-			PPP_BPE_Preflight::STATUS_PENDING   => '#2563eb',
-			PPP_BPE_Preflight::STATUS_PASSED    => '#16a34a',
-			PPP_BPE_Preflight::STATUS_WARNINGS  => '#d97706',
-			PPP_BPE_Preflight::STATUS_BLOCKED   => '#dc2626',
+			self::STATUS_FILES_REQUIRED        => '#d97706',
+			self::STATUS_FILES_UPLOADED        => '#16a34a',
+			self::STATUS_FILES_REJECTED        => '#dc2626',
+			PPP_BPE_Preflight::STATUS_PENDING  => '#2563eb',
+			PPP_BPE_Preflight::STATUS_PASSED   => '#16a34a',
+			PPP_BPE_Preflight::STATUS_WARNINGS => '#d97706',
+			PPP_BPE_Preflight::STATUS_BLOCKED  => '#dc2626',
 		);
 		?>
 		<div class="ppp-bpe-admin-files" style="margin-top:16px;">
@@ -399,7 +399,7 @@ class PPP_BPE_File_Upload {
 							<td><?php echo esc_html( size_format( $interior['size'] ?? 0 ) ); ?></td>
 							<td>
 								<a href="<?php echo esc_url( rest_url( PPP_BPE_Rest::NAMESPACE . '/orders/' . $order->get_id() . '/files/interior' ) ); ?>"
-								   class="button button-small"><?php esc_html_e( 'Download', 'printpricepro-bpe' ); ?></a>
+									class="button button-small"><?php esc_html_e( 'Download', 'printpricepro-bpe' ); ?></a>
 							</td>
 						<?php else : ?>
 							<td colspan="3"><em><?php esc_html_e( 'Not uploaded', 'printpricepro-bpe' ); ?></em></td>
@@ -412,7 +412,7 @@ class PPP_BPE_File_Upload {
 							<td><?php echo esc_html( size_format( $cover['size'] ?? 0 ) ); ?></td>
 							<td>
 								<a href="<?php echo esc_url( rest_url( PPP_BPE_Rest::NAMESPACE . '/orders/' . $order->get_id() . '/files/cover' ) ); ?>"
-								   class="button button-small"><?php esc_html_e( 'Download', 'printpricepro-bpe' ); ?></a>
+									class="button button-small"><?php esc_html_e( 'Download', 'printpricepro-bpe' ); ?></a>
 							</td>
 						<?php else : ?>
 							<td colspan="3"><em><?php esc_html_e( 'Not uploaded', 'printpricepro-bpe' ); ?></em></td>
@@ -586,58 +586,60 @@ class PPP_BPE_File_Upload {
 	}
 
 	private function render_upload_section( WC_Order $order ): void {
-		$order_id  = $order->get_id();
-		$status    = $order->get_meta( self::META_FILE_STATUS ) ?: self::STATUS_FILES_REQUIRED;
-		$interior  = $order->get_meta( self::META_INTERIOR_FILE );
-		$cover     = $order->get_meta( self::META_COVER_FILE );
-		$max_size  = $this->get_max_upload_size();
+		$order_id = $order->get_id();
+		$status   = ( $order->get_meta( self::META_FILE_STATUS ) ? $order->get_meta( self::META_FILE_STATUS ) : self::STATUS_FILES_REQUIRED );
+		$interior = $order->get_meta( self::META_INTERIOR_FILE );
+		$cover    = $order->get_meta( self::META_COVER_FILE );
+		$max_size = $this->get_max_upload_size();
 
-		$upload_data = wp_json_encode( array(
-			'orderId'    => $order_id,
-			'uploadUrl'  => rest_url( PPP_BPE_Rest::NAMESPACE . '/orders/' . $order_id . '/upload' ),
-			'nonce'      => wp_create_nonce( 'wp_rest' ),
-			'maxSize'    => $max_size,
-			'maxSizeStr' => size_format( $max_size ),
-			'status'     => $status,
-			'interior'   => $interior ? array(
-				'filename' => $interior['original_name'] ?? '',
-				'size'     => size_format( $interior['size'] ?? 0 ),
-			) : null,
-			'cover'      => $cover ? array(
-				'filename' => $cover['original_name'] ?? '',
-				'size'     => size_format( $cover['size'] ?? 0 ),
-			) : null,
-			'i18n'       => array(
-				'title'           => __( 'Upload Production Files', 'printpricepro-bpe' ),
-				'description'     => __( 'Please upload your Interior PDF and Cover PDF to proceed with production.', 'printpricepro-bpe' ),
-				'interiorLabel'   => __( 'Interior PDF', 'printpricepro-bpe' ),
-				'coverLabel'      => __( 'Cover PDF', 'printpricepro-bpe' ),
-				'dragDrop'        => __( 'Drag & drop or click to select', 'printpricepro-bpe' ),
-				'maxSize'         => sprintf(
-					/* translators: %s: maximum file size */
-					__( 'Max file size: %s', 'printpricepro-bpe' ),
-					size_format( $max_size )
+		$upload_data = wp_json_encode(
+			array(
+				'orderId'    => $order_id,
+				'uploadUrl'  => rest_url( PPP_BPE_Rest::NAMESPACE . '/orders/' . $order_id . '/upload' ),
+				'nonce'      => wp_create_nonce( 'wp_rest' ),
+				'maxSize'    => $max_size,
+				'maxSizeStr' => size_format( $max_size ),
+				'status'     => $status,
+				'interior'   => $interior ? array(
+					'filename' => $interior['original_name'] ?? '',
+					'size'     => size_format( $interior['size'] ?? 0 ),
+				) : null,
+				'cover'      => $cover ? array(
+					'filename' => $cover['original_name'] ?? '',
+					'size'     => size_format( $cover['size'] ?? 0 ),
+				) : null,
+				'i18n'       => array(
+					'title'            => __( 'Upload Production Files', 'printpricepro-bpe' ),
+					'description'      => __( 'Please upload your Interior PDF and Cover PDF to proceed with production.', 'printpricepro-bpe' ),
+					'interiorLabel'    => __( 'Interior PDF', 'printpricepro-bpe' ),
+					'coverLabel'       => __( 'Cover PDF', 'printpricepro-bpe' ),
+					'dragDrop'         => __( 'Drag & drop or click to select', 'printpricepro-bpe' ),
+					'maxSize'          => sprintf(
+						/* translators: %s: maximum file size */
+						__( 'Max file size: %s', 'printpricepro-bpe' ),
+						size_format( $max_size )
+					),
+					'pdfOnly'          => __( 'PDF files only', 'printpricepro-bpe' ),
+					'upload'           => __( 'Upload Files', 'printpricepro-bpe' ),
+					'uploading'        => __( 'Uploading…', 'printpricepro-bpe' ),
+					'uploaded'         => __( 'Uploaded', 'printpricepro-bpe' ),
+					'replace'          => __( 'Replace', 'printpricepro-bpe' ),
+					'success'          => __( 'Files uploaded successfully!', 'printpricepro-bpe' ),
+					'errorGeneric'     => __( 'Upload failed. Please try again.', 'printpricepro-bpe' ),
+					'errorType'        => __( 'Only PDF files are accepted.', 'printpricepro-bpe' ),
+					'errorSize'        => sprintf(
+						/* translators: %s: maximum file size */
+						__( 'File exceeds maximum size of %s.', 'printpricepro-bpe' ),
+						size_format( $max_size )
+					),
+					'statusRequired'   => __( 'Files Required', 'printpricepro-bpe' ),
+					'statusUploaded'   => __( 'Files Uploaded', 'printpricepro-bpe' ),
+					'statusRejected'   => __( 'Files Rejected', 'printpricepro-bpe' ),
+					'allUploaded'      => __( 'All production files have been uploaded. We will begin processing your order.', 'printpricepro-bpe' ),
+					'preflightStarted' => __( 'Preflight check has been started automatically.', 'printpricepro-bpe' ),
 				),
-				'pdfOnly'         => __( 'PDF files only', 'printpricepro-bpe' ),
-				'upload'          => __( 'Upload Files', 'printpricepro-bpe' ),
-				'uploading'       => __( 'Uploading…', 'printpricepro-bpe' ),
-				'uploaded'        => __( 'Uploaded', 'printpricepro-bpe' ),
-				'replace'         => __( 'Replace', 'printpricepro-bpe' ),
-				'success'         => __( 'Files uploaded successfully!', 'printpricepro-bpe' ),
-				'errorGeneric'    => __( 'Upload failed. Please try again.', 'printpricepro-bpe' ),
-				'errorType'       => __( 'Only PDF files are accepted.', 'printpricepro-bpe' ),
-				'errorSize'       => sprintf(
-					/* translators: %s: maximum file size */
-					__( 'File exceeds maximum size of %s.', 'printpricepro-bpe' ),
-					size_format( $max_size )
-				),
-				'statusRequired'  => __( 'Files Required', 'printpricepro-bpe' ),
-				'statusUploaded'  => __( 'Files Uploaded', 'printpricepro-bpe' ),
-				'statusRejected'  => __( 'Files Rejected', 'printpricepro-bpe' ),
-				'allUploaded'     => __( 'All production files have been uploaded. We will begin processing your order.', 'printpricepro-bpe' ),
-				'preflightStarted' => __( 'Preflight check has been started automatically.', 'printpricepro-bpe' ),
-			),
-		) );
+			)
+		);
 
 		wp_add_inline_script(
 			'ppp-bpe-upload',
