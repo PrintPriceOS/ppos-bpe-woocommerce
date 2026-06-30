@@ -435,17 +435,35 @@ class PPP_BPE_File_Upload {
 			return;
 		}
 
-		$htaccess = $upload_dir . '/.htaccess';
-		if ( file_exists( $htaccess ) ) {
-			return;
-		}
+		$htaccess         = $upload_dir . '/.htaccess';
+		$htaccess_content = $this->get_htaccess_content();
 
-		file_put_contents( $htaccess, "Order Deny,Allow\nDeny from all\n" );
+		// Write or overwrite whenever content is outdated.
+		if ( ! file_exists( $htaccess ) || file_get_contents( $htaccess ) !== $htaccess_content ) {
+			file_put_contents( $htaccess, $htaccess_content );
+		}
 
 		$index = $upload_dir . '/index.php';
 		if ( ! file_exists( $index ) ) {
 			file_put_contents( $index, "<?php\n// Silence is golden.\n" );
 		}
+	}
+
+	private function get_htaccess_content(): string {
+		// Apache 2.4+ syntax with fallback for Apache 2.2.
+		// Nginx does not read .htaccess; files are still protected via the
+		// REST-gated download handler and the random token in filenames.
+		return <<<'HTACCESS'
+# Apache 2.4+
+<IfModule mod_authz_core.c>
+	Require all denied
+</IfModule>
+# Apache 2.2 fallback
+<IfModule !mod_authz_core.c>
+	Order Deny,Allow
+	Deny from all
+</IfModule>
+HTACCESS;
 	}
 
 	private function validate_file( array $file ): true|WP_Error {
