@@ -1,0 +1,13 @@
+{
+	"private": true,
+	"scripts": {
+		"test:e2e": "node node_modules/@playwright/test/cli.js test --config=e2e/playwright.config.ts",
+		"test:e2e:ui": "node node_modules/@playwright/test/cli.js test --config=e2e/playwright.config.ts --ui",
+		"test:themes": "bash scripts/run-theme-tests.sh",
+		"test:update-snapshots": "bash scripts/run-theme-tests.sh --update-snapshots",
+		"install-themes": "bash scripts/install-themes.sh"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.49"
+	}
+}

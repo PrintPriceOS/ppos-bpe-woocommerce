@@ -40,6 +40,11 @@ ehthumbs.db
 *.zip
 *.tar.gz
 
+# Playwright
+test-results/
+playwright-report/
+e2e/fixtures/wp-auth.json
+
 # Project-local files (not for distribution)
 CLAUDE.md
 docker-compose.yml
