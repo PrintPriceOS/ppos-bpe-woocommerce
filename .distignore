@@ -4,6 +4,7 @@
 /.git
 /.github
 /.gitignore
+/.gitattributes
 /.distignore
 /.claude
 
@@ -15,12 +16,20 @@
 /node_modules
 /vendor
 
+# E2E test suite
+/e2e/
+/test-results/
+/playwright-report/
+/scripts/
+run-all-themes.js
+
 composer.json
 composer.lock
 package.json
 package-lock.json
 phpcs.xml.dist
 phpunit.xml.dist
+docker-compose.yml
 
 CLAUDE.md
 PrintPricePro BPE WooCommerce Plugin.md

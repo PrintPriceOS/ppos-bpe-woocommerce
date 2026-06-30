@@ -435,17 +435,23 @@ class PPP_BPE_File_Upload {
 			return;
 		}
 
+		global $wp_filesystem;
+		if ( empty( $wp_filesystem ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
 		$htaccess         = $upload_dir . '/.htaccess';
 		$htaccess_content = $this->get_htaccess_content();
 
 		// Write or overwrite whenever content is outdated.
-		if ( ! file_exists( $htaccess ) || file_get_contents( $htaccess ) !== $htaccess_content ) {
-			file_put_contents( $htaccess, $htaccess_content );
+		if ( ! $wp_filesystem->exists( $htaccess ) || $wp_filesystem->get_contents( $htaccess ) !== $htaccess_content ) {
+			$wp_filesystem->put_contents( $htaccess, $htaccess_content, FS_CHMOD_FILE );
 		}
 
 		$index = $upload_dir . '/index.php';
-		if ( ! file_exists( $index ) ) {
-			file_put_contents( $index, "<?php\n// Silence is golden.\n" );
+		if ( ! $wp_filesystem->exists( $index ) ) {
+			$wp_filesystem->put_contents( $index, "<?php\n// Silence is golden.\n", FS_CHMOD_FILE );
 		}
 	}
 
@@ -515,7 +521,12 @@ HTACCESS;
 
 		$index_file = $order_dir . '/index.php';
 		if ( ! file_exists( $index_file ) ) {
-			file_put_contents( $index_file, "<?php\n// Silence is golden.\n" );
+			global $wp_filesystem;
+			if ( empty( $wp_filesystem ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+				WP_Filesystem();
+			}
+			$wp_filesystem->put_contents( $index_file, "<?php\n// Silence is golden.\n", FS_CHMOD_FILE );
 		}
 
 		$safe_name = sanitize_file_name( $file['name'] );

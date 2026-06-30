@@ -104,6 +104,40 @@ PDFs are stored in a protected directory under `wp-content/uploads/ppp-bpe-files
 4. Production queue management for print houses.
 5. License and plan management page.
 
+== External Services ==
+
+This plugin can connect to the PrintPricePro API (https://printpricepro.com) when
+configured by the site administrator. All connections require an explicit API URL
+to be entered in **PrintPricePro > Settings**. No data is sent in default local mode.
+
+Depending on the features you enable, the following data may be transmitted:
+
+* **License activation / verification** — sends your license key and site URL to
+  verify your subscription. Triggered on manual activation and via a daily cron job.
+* **Price calculation (API mode)** — sends book specifications (size, pages, paper,
+  binding, color, quantity) to receive a signed price quote.
+* **PDF Preflight** — sends uploaded PDF files to the Preflight API for automated
+  file validation before production.
+* **Control Plane sync (Connected Node mode)** — sends order details, production
+  status, and uploaded files to the PrintPrice OS control plane.
+
+Privacy policy: https://printpricepro.com/privacy
+Terms of service: https://printpricepro.com/terms
+
+== Privacy Policy ==
+
+This plugin does not collect or transmit any data by default. When the administrator
+configures an API URL and enables optional features (API pricing, Preflight, or
+Control Plane), the plugin transmits data to the configured endpoint as described
+in the External Services section above.
+
+Uploaded PDF files are stored in `wp-content/uploads/ppp-bpe-files/` on your server
+and are deleted when the plugin is uninstalled. Order metadata (book specifications
+attached to WooCommerce orders) is retained after uninstall to preserve order history.
+
+For full details on how PrintPricePro handles data, see:
+https://printpricepro.com/privacy
+
 == Changelog ==
 
 = 0.1.0 =
